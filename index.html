@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Echo Jardinagem — Portal dos Condomínios</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter','Segoe UI',sans-serif}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef}=React;
+
+const PHONE="5542988408840";
+const EJS_KEY="lqI0oJGFLIs8N6eq_",EJS_SVC="service_u2qllop",EJS_TPL="template_4fdj8fo";
+const ALL_SVCS=["Corte de Grama ✂️","Poda de Árvore 🌳","Irrigação Inteligente 💧","Iluminação de Jardim 💡","Limpeza Geral 🧹","Adubação 🌱","Controle de Pragas 🐛","Paisagismo 🌸"];
+const WDS=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const PLANOS={Essencial:{ico:"🌱",bg:"#dcfce7",c:"#16a34a"},Profissional:{ico:"⚙️",bg:"#dbeafe",c:"#2563eb"},Premium:{ico:"⭐",bg:"#fef3c7",c:"#d97706"}};
+const STATUS={pending:{l:"Aguardando",c:"#f59e0b",bg:"#fef3c7",i:"⏳"},in_progress:{l:"Em Andamento",c:"#3b82f6",bg:"#dbeafe",i:"🔧"},resolved:{l:"Resolvido",c:"#16a34a",bg:"#dcfce7",i:"✅"}};
+const G={c900:"#0d2b1a",c800:"#1a4a2e",c700:"#2d6a4f",c500:"#52b788",c400:"#74c69d",c300:"#95d5b2",c200:"#b7e4c7",c100:"#d8f3dc",c50:"#f0faf3",g800:"#1f2d26",g600:"#4a5a50",g400:"#8a9a8f",g200:"#e2ebe4"};
+const DEF={adminPassword:"echo2025"};
+
+const uid=()=>Math.random().toString(36).slice(2,9);
+const fmt=d=>new Date(d).toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
+const mesKey=()=>new Date().toISOString().slice(0,7);
+const mesLbl=()=>new Date().toLocaleDateString("pt-BR",{month:"long",year:"numeric"}).replace(/^\w/,c=>c.toUpperCase());
+const dkey=d=>new Date(d).toISOString().slice(0,10);
+const codeGen=()=>Math.random().toString(36).slice(2,8);
+function isoWeek(date){const d=new Date(date);d.setHours(0,0,0,0);d.setDate(d.getDate()+4-(d.getDay()||7));return Math.ceil((((d-new Date(d.getFullYear(),0,1))/86400000)+1)/7);}
+function isOn(svc,date){const ag=svc.agendamento;if(!ag)return false;if(svc.freq==="Mensal")return ag.diaMes===date.getDate();if(!ag.diasSemana||!ag.diasSemana.includes(date.getDay()))return false;if(svc.freq==="Semanal")return true;const w=isoWeek(date);return ag.semPar==="par"?w%2===0:w%2===1;}
+function schedTxt(svc){const ag=svc.agendamento;if(!ag)return"";if(svc.freq==="Mensal")return"Dia "+ag.diaMes;if(!ag.diasSemana||!ag.diasSemana.length)return"";const dias=ag.diasSemana.map(d=>WDS[d]).join(", ");return svc.freq==="Quinzenal"?dias+" · "+(ag.semPar==="par"?"sem. pares":"sem. ímpares"):dias;}
+function getVisits(conds,days=7){const list=[],h=new Date();h.setHours(0,0,0,0);conds.filter(c=>c.ativo!==false).forEach(cond=>{for(let i=1;i<=days;i++){const d=new Date(h);d.setDate(h.getDate()+i);d.setHours(0,0,0,0);(cond.servicos||[]).forEach(svc=>{if(isOn(svc,d))list.push({cond,svc,date:new Date(d)});});}});return list.sort((a,b)=>a.date-b.date);}
+async function sendEmail(p){return fetch("https://api.emailjs.com/api/v1.0/email/send",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({service_id:EJS_SVC,template_id:EJS_TPL,user_id:EJS_KEY,template_params:p})});}
+async function compressImage(file,maxW=900,q=0.72){return new Promise(res=>{const reader=new FileReader();reader.onload=e=>{const img=new Image();img.onload=()=>{const sc=Math.min(1,maxW/img.width);const c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",q));};img.src=e.target.result;};reader.readAsDataURL(file);});}
+
+const inp={background:G.c50,border:"1.5px solid "+G.c100,borderRadius:"9px",padding:".65rem .9rem",fontSize:".88rem",fontFamily:"inherit",color:G.g800,outline:"none",width:"100%",boxSizing:"border-box"};
+const lbl={display:"block",fontSize:".72rem",fontWeight:700,color:G.c700,marginBottom:".3rem",textTransform:"uppercase",letterSpacing:".05em"};
+
+function Btn({onClick,children,bg=G.c800,style={}}){return <button onClick={onClick} style={{background:bg,color:"#fff",border:"none",borderRadius:"100px",padding:".72rem 1.5rem",fontWeight:700,cursor:"pointer",fontFamily:"inherit",fontSize:".9rem",...style}}>{children}</button>;}
+function BackBtn({onClick}){return <button onClick={onClick} style={{background:"none",border:"none",color:G.c700,cursor:"pointer",fontWeight:600,fontSize:".85rem",marginBottom:"1.2rem",display:"flex",alignItems:"center",gap:".4rem",fontFamily:"inherit"}}>← Voltar</button>;}
+function Empty({icon="📋",title,sub=""}){return <div style={{textAlign:"center",padding:"3rem 1rem",background:"#fff",borderRadius:"14px",border:"1.5px dashed "+G.g200,color:G.g400}}><div style={{fontSize:"2.5rem",marginBottom:".8rem"}}>{icon}</div><div style={{fontWeight:700,color:G.g600,marginBottom:".3rem"}}>{title}</div>{sub&&<div style={{fontSize:".83rem"}}>{sub}</div>}</div>;}
+function PBadge({plano="Essencial"}){const p=PLANOS[plano]||PLANOS.Essencial;return <span style={{fontSize:".7rem",fontWeight:700,padding:".18rem .6rem",borderRadius:"100px",background:p.bg,color:p.c,whiteSpace:"nowrap"}}>{p.ico} {plano}</span>;}
+function SBadge({status}){const s=STATUS[status]||STATUS.pending;return <span style={{fontSize:".72rem",fontWeight:700,padding:".2rem .65rem",borderRadius:"100px",background:s.bg,color:s.c,whiteSpace:"nowrap"}}>{s.i} {s.l}</span>;}
+
+function ImagePicker({value,onChange,label="Foto",tag=""}){
+  const ref=useRef();
+  const [loading,setLoading]=useState(false);
+  async function handle(e){const f=e.target.files[0];if(!f)return;setLoading(true);const compressed=await compressImage(f);onChange(compressed);setLoading(false);}
+  return(
+    <div>
+      <input ref={ref} type="file" accept="image/*" style={{display:"none"}} onChange={handle}/>
+      <div onClick={()=>!loading&&ref.current.click()} style={{cursor:"pointer",borderRadius:"10px",overflow:"hidden",border:"2px dashed "+(value?G.c400:G.g200),background:value?"#000":G.c50,minHeight:"120px",display:"flex",alignItems:"center",justifyContent:"center",position:"relative"}}>
+        {loading&&<div style={{color:G.c400,fontSize:".85rem",fontWeight:600}}>Comprimindo...</div>}
+        {!loading&&value&&<div style={{width:"100%",position:"relative"}}><img src={value} alt={label} style={{width:"100%",aspectRatio:"4/3",objectFit:"cover",display:"block"}}/>{tag&&<div style={{position:"absolute",bottom:"8px",left:"8px",background:tag==="ANTES"?"rgba(0,0,0,.7)":"rgba(45,106,79,.85)",color:"#fff",fontSize:".68rem",fontWeight:700,padding:".2rem .6rem",borderRadius:"100px"}}>{tag}</div>}<div style={{position:"absolute",top:"8px",right:"8px",background:"rgba(0,0,0,.55)",color:"#fff",fontSize:".72rem",fontWeight:600,padding:".25rem .7rem",borderRadius:"100px"}}>📷 Trocar</div></div>}
+        {!loading&&!value&&<div style={{textAlign:"center",padding:"1.5rem 1rem"}}><div style={{fontSize:"2rem",marginBottom:".4rem"}}>📷</div><div style={{fontSize:".85rem",fontWeight:700,color:G.g600,marginBottom:".2rem"}}>{label}</div><div style={{fontSize:".74rem",color:G.g400}}>Toque para abrir a galeria</div></div>}
+      </div>
+    </div>
+  );
+}
+
+// ── LOCAL STORAGE ─────────────────────────────────
+function lsGet(k){try{const r=localStorage.getItem(k);return r?JSON.parse(r):null;}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+// ── APP ───────────────────────────────────────────
+function App(){
+  const [view,setView]=useState("home");
+  const [conds,setConds]=useState([]);
+  const [feitos,setFeitos]=useState({});
+  const [notifs,setNotifs]=useState({});
+  const [complaints,setComplaints]=useState([]);
+  const [posts,setPosts]=useState([]);
+  const [settings,setSettings]=useState(DEF);
+  const [blogCondo,setBlogCondo]=useState(null);
+  const [loading,setLoading]=useState(true);
+
+  useEffect(()=>{
+    setConds(lsGet("u-conds")||[]);
+    setFeitos(lsGet("u-feitos:"+mesKey())||{});
+    setNotifs(lsGet("u-notifs")||{});
+    setComplaints(lsGet("u-complaints")||[]);
+    setPosts(lsGet("u-posts")||[]);
+    const s=lsGet("u-settings");if(s)setSettings({...DEF,...s});
+    setLoading(false);
+  },[]);
+
+  function saveConds(d){setConds(d);lsSet("u-conds",d);}
+  function saveFeitos(d){setFeitos(d);lsSet("u-feitos:"+mesKey(),d);}
+  function saveNotifs(d){setNotifs(d);lsSet("u-notifs",d);}
+  function saveComplaints(d){setComplaints(d);lsSet("u-complaints",d);}
+  function savePosts(d){setPosts(d);lsSet("u-posts",d);}
+  function saveSettings(d){setSettings(d);lsSet("u-settings",d);}
+
+  if(loading)return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:G.c900,color:G.c400,fontFamily:"inherit"}}>🌿 Carregando...</div>;
+
+  const shared={conds,feitos,notifs,complaints,posts,settings,saveConds,saveFeitos,saveNotifs,saveComplaints,savePosts,saveSettings,setView};
+  return(
+    <div style={{fontFamily:"Inter,sans-serif",background:G.c50,minHeight:"100vh"}}>
+      {view==="home"&&<Home setView={setView}/>}
+      {view==="complaint"&&<ComplaintForm {...shared}/>}
+      {view==="access"&&<BlogAccess conds={conds} setBlogCondo={setBlogCondo} setView={setView}/>}
+      {view==="blog"&&<Blog condo={blogCondo} posts={posts} complaints={complaints} setView={setView}/>}
+      {view==="admin-login"&&<AdminLogin settings={settings} saveSettings={saveSettings} setView={setView}/>}
+      {view==="admin"&&<Admin {...shared}/>}
+    </div>
+  );
+}
+
+function Home({setView}){
+  return(
+    <div>
+      <div style={{background:"linear-gradient(135deg,"+G.c900+","+G.c800+")",padding:"3rem 1.5rem 2.5rem",textAlign:"center"}}>
+        <div style={{display:"inline-block",background:"rgba(82,183,136,.18)",border:"1px solid rgba(82,183,136,.35)",color:G.c300,padding:".35rem 1rem",borderRadius:"100px",fontSize:".75rem",fontWeight:700,letterSpacing:".06em",marginBottom:"1rem"}}>🌿 Echo Jardinagem</div>
+        <h1 style={{color:"#fff",fontSize:"clamp(2rem,6vw,3rem)",fontWeight:800,lineHeight:1.12,marginBottom:".8rem"}}>Portal dos<br/><span style={{color:G.c400}}>Condomínios</span></h1>
+        <p style={{color:G.c200,fontSize:".95rem",maxWidth:"400px",margin:"0 auto",lineHeight:1.75}}>Registre solicitações e acompanhe os resultados dos serviços de jardinagem.</p>
+      </div>
+      <div style={{padding:"1.5rem 1.2rem",maxWidth:"540px",margin:"0 auto",display:"flex",flexDirection:"column",gap:"1rem"}}>
+        <button onClick={()=>setView("complaint")} style={{background:"#fff",border:"1.5px solid "+G.g200,borderRadius:"16px",padding:"1.5rem",cursor:"pointer",textAlign:"left",boxShadow:"0 2px 12px rgba(0,0,0,.07)",outline:"none"}}>
+          <div style={{fontSize:"2rem",marginBottom:".8rem"}}>📝</div>
+          <div style={{fontWeight:800,fontSize:"1rem",color:G.c800,marginBottom:".35rem"}}>Registrar Reclamação</div>
+          <div style={{fontSize:".85rem",color:G.g600,lineHeight:1.65,marginBottom:"1rem"}}>Informe um problema ou solicite um serviço. Sem cadastro necessário.</div>
+          <div style={{color:G.c500,fontWeight:700,fontSize:".84rem"}}>Acessar →</div>
+        </button>
+        <button onClick={()=>setView("access")} style={{background:"linear-gradient(135deg,"+G.c800+","+G.c700+")",border:"none",borderRadius:"16px",padding:"1.5rem",cursor:"pointer",textAlign:"left",boxShadow:"0 4px 20px rgba(45,106,79,.35)",outline:"none"}}>
+          <div style={{fontSize:"2rem",marginBottom:".8rem"}}>📸</div>
+          <div style={{fontWeight:800,fontSize:"1rem",color:"#fff",marginBottom:".35rem"}}>Portal dos Moradores</div>
+          <div style={{fontSize:".85rem",color:G.c200,lineHeight:1.65,marginBottom:"1rem"}}>Veja resultados dos serviços com fotos de antes e depois.</div>
+          <div style={{color:G.c400,fontWeight:700,fontSize:".84rem"}}>Acessar com código →</div>
+        </button>
+      </div>
+      <div style={{textAlign:"center",paddingBottom:"2rem"}}><button onClick={()=>setView("admin-login")} style={{background:"none",border:"none",color:G.g400,fontSize:".78rem",cursor:"pointer",textDecoration:"underline",fontFamily:"inherit"}}>Área Administrativa</button></div>
+    </div>
+  );
+}
+
+function ComplaintForm({conds,complaints,saveComplaints,setView}){
+  const [condoId,setCondoId]=useState("");const [name,setName]=useState("");const [apt,setApt]=useState("");const [desc,setDesc]=useState("");const [photoUrl,setPhotoUrl]=useState("");const [sent,setSent]=useState(false);const [code,setCode]=useState("");const [err,setErr]=useState("");
+  function submit(){if(!condoId){setErr("Selecione o condomínio");return;}if(!name.trim()){setErr("Digite seu nome");return;}if(!apt.trim()){setErr("Digite seu apartamento");return;}if(!desc.trim()){setErr("Descreva a reclamação");return;}const id=uid();saveComplaints([...complaints,{id,condoId,name,apt,desc,photoUrl,status:"pending",date:new Date().toISOString(),adminNote:""}]);setCode(id);setSent(true);}
+  if(sent)return(<div style={{maxWidth:"440px",margin:"0 auto",padding:"2rem 1.2rem",textAlign:"center"}}><div style={{background:"#fff",borderRadius:"16px",padding:"2rem",border:"1.5px solid "+G.c100,boxShadow:"0 2px 12px rgba(0,0,0,.06)"}}><div style={{fontSize:"3.5rem",marginBottom:"1rem"}}>✅</div><h2 style={{color:G.c700,fontSize:"1.15rem",fontWeight:800,marginBottom:".5rem"}}>Reclamação Enviada!</h2><p style={{color:G.g600,fontSize:".88rem",lineHeight:1.65,marginBottom:"1.2rem"}}>Guarde o código para consultar o status.</p><div style={{background:G.c50,border:"1.5px solid "+G.c100,borderRadius:"10px",padding:"1rem",marginBottom:"1.5rem"}}><div style={{fontSize:".7rem",color:G.g400,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",marginBottom:".35rem"}}>Código de acompanhamento</div><div style={{fontSize:"1.15rem",fontWeight:800,color:G.c700,letterSpacing:".1em"}}>{code.toUpperCase()}</div></div><Btn onClick={()=>setView("home")} style={{width:"100%"}}>Voltar ao Início</Btn></div></div>);
+  return(
+    <div style={{maxWidth:"520px",margin:"0 auto",padding:"1.5rem 1.2rem"}}>
+      <BackBtn onClick={()=>setView("home")}/>
+      <h2 style={{color:G.c800,fontSize:"1.15rem",fontWeight:800,marginBottom:".3rem"}}>📝 Registrar Reclamação</h2>
+      <p style={{color:G.g600,fontSize:".85rem",marginBottom:"1.5rem"}}>Sem necessidade de cadastro.</p>
+      <div style={{display:"flex",flexDirection:"column",gap:".85rem"}}>
+        <div><label style={lbl}>Condomínio *</label><select style={inp} value={condoId} onChange={e=>setCondoId(e.target.value)}><option value="">Selecione</option>{conds.map(c=><option key={c.id} value={c.id}>{c.nome}</option>)}</select></div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".7rem"}}>
+          <div><label style={lbl}>Nome *</label><input style={inp} value={name} onChange={e=>setName(e.target.value)} placeholder="Seu nome"/></div>
+          <div><label style={lbl}>Apartamento *</label><input style={inp} value={apt} onChange={e=>setApt(e.target.value)} placeholder="Ex: 201"/></div>
+        </div>
+        <div><label style={lbl}>Descrição *</label><textarea style={{...inp,resize:"vertical",minHeight:"90px"}} value={desc} onChange={e=>setDesc(e.target.value)} placeholder="Descreva o problema..."/></div>
+        <div><label style={lbl}>Foto (opcional)</label><ImagePicker value={photoUrl} onChange={setPhotoUrl} label="Adicionar foto do problema"/>{photoUrl&&<button onClick={()=>setPhotoUrl("")} style={{marginTop:".3rem",background:"none",border:"none",color:"#ef4444",fontSize:".75rem",cursor:"pointer",fontFamily:"inherit"}}>✕ Remover foto</button>}</div>
+        {err&&<div style={{background:"#fef2f2",border:"1.5px solid #fecaca",borderRadius:"9px",padding:".7rem 1rem",color:"#b91c1c",fontSize:".85rem"}}>{err}</div>}
+        <Btn onClick={submit} style={{width:"100%",borderRadius:"9px"}}>📤 Enviar Reclamação</Btn>
+      </div>
+    </div>
+  );
+}
+
+function BlogAccess({conds,setBlogCondo,setView}){
+  const [code,setCode]=useState("");const [err,setErr]=useState("");
+  function enter(){const found=conds.find(c=>c.code===code.trim().toLowerCase());if(!found){setErr("Código incorreto.");return;}setBlogCondo(found);setView("blog");}
+  return(<div style={{maxWidth:"400px",margin:"0 auto",padding:"2.5rem 1.2rem",textAlign:"center"}}><BackBtn onClick={()=>setView("home")}/><div style={{background:"#fff",borderRadius:"16px",padding:"2rem",border:"1.5px solid "+G.c100,boxShadow:"0 2px 12px rgba(0,0,0,.06)"}}><div style={{fontSize:"2.5rem",marginBottom:"1rem"}}>🔐</div><h2 style={{color:G.c800,fontSize:"1.05rem",fontWeight:800,marginBottom:".4rem"}}>Portal dos Moradores</h2><p style={{color:G.g600,fontSize:".85rem",marginBottom:"1.5rem",lineHeight:1.65}}>Digite o código de acesso do seu condomínio.</p><input style={{...inp,textAlign:"center",fontSize:"1.05rem",letterSpacing:".12em",fontWeight:700,marginBottom:".9rem"}} value={code} onChange={e=>{setCode(e.target.value);setErr("");}} placeholder="Código" onKeyDown={e=>{if(e.key==="Enter")enter();}}/>{err&&<div style={{color:"#ef4444",fontSize:".82rem",marginBottom:".9rem"}}>{err}</div>}<Btn onClick={enter} style={{width:"100%"}}>Entrar →</Btn></div></div>);
+}
+
+function Blog({condo,posts,complaints,setView}){
+  const [tab,setTab]=useState("posts");const [proto,setProto]=useState("");const [found,setFound]=useState(null);const [searched,setSearched]=useState(false);
+  const condoPosts=posts.filter(p=>p.condoId===condo.id).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  function search(){const c=complaints.find(x=>x.id===proto.trim().toLowerCase()&&x.condoId===condo.id);setFound(c||null);setSearched(true);}
+  return(
+    <div style={{maxWidth:"700px",margin:"0 auto"}}>
+      <div style={{background:"linear-gradient(135deg,"+G.c900+","+G.c800+")",padding:"1.1rem 1.5rem"}}><button onClick={()=>setView("home")} style={{background:"none",border:"none",color:G.c300,cursor:"pointer",fontSize:".8rem",fontWeight:600,display:"flex",alignItems:"center",gap:".4rem",fontFamily:"inherit",marginBottom:".6rem"}}>← Início</button><div style={{color:G.c400,fontSize:".68rem",fontWeight:700,letterSpacing:".09em",textTransform:"uppercase"}}>🌿 Portal dos Moradores</div><h1 style={{color:"#fff",fontSize:"1.05rem",fontWeight:800,marginTop:".15rem"}}>{condo.nome}</h1></div>
+      <div style={{background:"#fff",borderBottom:"2px solid "+G.g200,display:"flex"}}>
+        <button onClick={()=>setTab("posts")} style={{flex:1,background:"none",border:"none",borderBottom:tab==="posts"?"2.5px solid "+G.c500:"2.5px solid transparent",marginBottom:"-2px",padding:".85rem",fontSize:".83rem",fontWeight:tab==="posts"?700:500,color:tab==="posts"?G.c700:G.g400,cursor:"pointer",fontFamily:"inherit"}}>📸 Resultados ({condoPosts.length})</button>
+        <button onClick={()=>setTab("status")} style={{flex:1,background:"none",border:"none",borderBottom:tab==="status"?"2.5px solid "+G.c500:"2.5px solid transparent",marginBottom:"-2px",padding:".85rem",fontSize:".83rem",fontWeight:tab==="status"?700:500,color:tab==="status"?G.c700:G.g400,cursor:"pointer",fontFamily:"inherit"}}>🔍 Minha Reclamação</button>
+      </div>
+      <div style={{padding:"1.2rem"}}>
+        {tab==="posts"&&(!condoPosts.length?<Empty icon="📷" title="Nenhum resultado publicado ainda" sub="Os resultados aparecerão aqui em breve"/>:<div style={{display:"flex",flexDirection:"column",gap:"1.2rem"}}>{condoPosts.map(post=><div key={post.id} style={{background:"#fff",borderRadius:"14px",border:"1.5px solid "+G.g200,overflow:"hidden",boxShadow:"0 2px 10px rgba(0,0,0,.06)"}}><div style={{padding:".95rem 1.2rem",borderBottom:"1px solid "+G.c50}}><div style={{fontWeight:800,color:G.c800,fontSize:".95rem"}}>{post.title}</div><div style={{fontSize:".73rem",color:G.g400,marginTop:".2rem"}}>{fmt(post.date)}</div></div>{(post.beforeUrl||post.afterUrl)&&<div style={{display:"grid",gridTemplateColumns:post.beforeUrl&&post.afterUrl?"1fr 1fr":"1fr",gap:"2px"}}>{post.beforeUrl&&<div style={{position:"relative"}}><img src={post.beforeUrl} alt="Antes" style={{width:"100%",aspectRatio:"4/3",objectFit:"cover",display:"block"}}/><div style={{position:"absolute",bottom:"8px",left:"8px",background:"rgba(0,0,0,.65)",color:"#fff",fontSize:".68rem",fontWeight:700,padding:".2rem .6rem",borderRadius:"100px"}}>ANTES</div></div>}{post.afterUrl&&<div style={{position:"relative"}}><img src={post.afterUrl} alt="Depois" style={{width:"100%",aspectRatio:"4/3",objectFit:"cover",display:"block"}}/><div style={{position:"absolute",bottom:"8px",left:"8px",background:"rgba(45,106,79,.85)",color:"#fff",fontSize:".68rem",fontWeight:700,padding:".2rem .6rem",borderRadius:"100px"}}>DEPOIS</div></div>}</div>}{post.desc&&<div style={{padding:"1rem 1.2rem",fontSize:".88rem",color:G.g600,lineHeight:1.68}}>{post.desc}</div>}</div>)}</div>)}
+        {tab==="status"&&(<div><p style={{color:G.g600,fontSize:".88rem",marginBottom:"1.2rem",lineHeight:1.65}}>Digite o código recebido ao enviar a reclamação.</p><div style={{display:"flex",gap:".6rem",marginBottom:"1.2rem"}}><input style={{...inp,flex:1,letterSpacing:".06em"}} value={proto} onChange={e=>{setProto(e.target.value);setSearched(false);}} placeholder="Código" onKeyDown={e=>{if(e.key==="Enter")search();}}/><button onClick={search} style={{background:G.c800,color:"#fff",border:"none",borderRadius:"9px",padding:".65rem 1.1rem",fontWeight:700,cursor:"pointer",fontFamily:"inherit",fontSize:".85rem",flexShrink:0}}>Buscar</button></div>{searched&&!found&&<div style={{background:"#fef2f2",border:"1.5px solid #fecaca",borderRadius:"10px",padding:"1rem",color:"#b91c1c",fontSize:".85rem"}}>Código não encontrado.</div>}{found&&<div style={{background:"#fff",borderRadius:"12px",border:"1.5px solid "+G.g200,overflow:"hidden"}}><div style={{padding:".9rem 1.2rem",background:STATUS[found.status].bg,display:"flex",alignItems:"center",justifyContent:"space-between"}}><div style={{fontWeight:800,color:STATUS[found.status].c}}>{STATUS[found.status].i} {STATUS[found.status].l}</div><div style={{fontSize:".73rem",color:G.g600}}>{fmt(found.date)}</div></div><div style={{padding:"1rem 1.2rem"}}><div style={{fontSize:".88rem",color:G.g800,lineHeight:1.65,marginBottom:found.adminNote?"1rem":"0"}}>{found.desc}</div>{found.photoUrl&&<img src={found.photoUrl} alt="" style={{width:"100%",borderRadius:"8px",marginBottom:"1rem",marginTop:".5rem"}}/>}{found.adminNote&&<div style={{background:G.c50,border:"1.5px solid "+G.c100,borderRadius:"9px",padding:"1rem"}}><div style={{fontSize:".72rem",color:G.c700,fontWeight:700,textTransform:"uppercase",letterSpacing:".05em",marginBottom:".35rem"}}>💬 Resposta Echo Jardinagem</div><div style={{fontSize:".88rem",color:G.g800,lineHeight:1.65}}>{found.adminNote}</div></div>}</div></div>}</div>)}
+      </div>
+    </div>
+  );
+}
+
+function AdminLogin({settings,saveSettings,setView}){
+  const [pw,setPw]=useState("");const [err,setErr]=useState("");const [mode,setMode]=useState("login");const [sending,setSending]=useState(false);const [tempCode,setTempCode]=useState("");const [code,setCode]=useState("");const [newPw,setNewPw]=useState("");const [newPw2,setNewPw2]=useState("");const [success,setSuccess]=useState("");
+  function enter(){pw===settings.adminPassword?setView("admin"):setErr("Senha incorreta");}
+  async function sendReset(){setSending(true);setErr("");const c=Math.floor(100000+Math.random()*900000).toString();try{await sendEmail({servico:"🔑 Recuperação de Senha — Echo Jardinagem",data:new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"}),horario:"Código válido por 15 minutos",nome:"Painel Administrativo",telefone:"—",endereco:"—",observacoes:"Código: "+c+"\n\nDigite este código para redefinir sua senha."});setTempCode(c);setMode("reset");}catch(e){setErr("Erro ao enviar e-mail.");}setSending(false);}
+  function confirmReset(){setErr("");if(code.trim()!==tempCode){setErr("Código incorreto.");return;}if(!newPw.trim()||newPw.length<4){setErr("Senha deve ter ao menos 4 caracteres.");return;}if(newPw!==newPw2){setErr("As senhas não coincidem.");return;}saveSettings({...settings,adminPassword:newPw});setMode("login");setPw("");setCode("");setNewPw("");setNewPw2("");setTempCode("");setSuccess("✅ Senha redefinida! Faça login com a nova senha.");setTimeout(()=>setSuccess(""),4000);}
+  return(
+    <div style={{maxWidth:"380px",margin:"0 auto",padding:"3rem 1.2rem",textAlign:"center"}}><BackBtn onClick={()=>setView("home")}/>
+    <div style={{background:"#fff",borderRadius:"16px",padding:"2rem",border:"1.5px solid "+G.c100,boxShadow:"0 2px 12px rgba(0,0,0,.06)"}}>
+      {mode==="login"&&<><div style={{fontSize:"2rem",marginBottom:".8rem"}}>🔑</div><h2 style={{color:G.c800,fontWeight:800,fontSize:"1rem",marginBottom:"1.2rem"}}>Área Administrativa</h2><input type="password" style={{...inp,textAlign:"center",marginBottom:".9rem"}} value={pw} onChange={e=>{setPw(e.target.value);setErr("");}} placeholder="••••••••" onKeyDown={e=>{if(e.key==="Enter")enter();}}/>{err&&<div style={{color:"#ef4444",fontSize:".82rem",marginBottom:".8rem"}}>{err}</div>}{success&&<div style={{color:G.c700,fontSize:".82rem",marginBottom:".8rem",fontWeight:600}}>{success}</div>}<Btn onClick={enter} style={{width:"100%",marginBottom:"1.2rem"}}>Entrar</Btn><button onClick={sendReset} disabled={sending} style={{background:"none",border:"none",color:G.g400,fontSize:".8rem",cursor:"pointer",fontFamily:"inherit",textDecoration:"underline"}}>{sending?"Enviando código...":"🔒 Esqueci minha senha"}</button></>}
+      {mode==="reset"&&<><div style={{fontSize:"2rem",marginBottom:".8rem"}}>📧</div><h2 style={{color:G.c800,fontWeight:800,fontSize:"1rem",marginBottom:".5rem"}}>Redefinir Senha</h2><p style={{color:G.g600,fontSize:".84rem",lineHeight:1.6,marginBottom:"1.3rem"}}>Código enviado para <strong>felipefolqueninrio@gmail.com</strong>.</p><div style={{display:"flex",flexDirection:"column",gap:".75rem",textAlign:"left"}}><div><label style={lbl}>Código recebido</label><input style={{...inp,textAlign:"center",letterSpacing:".2em",fontSize:"1.1rem",fontWeight:700}} value={code} onChange={e=>{setCode(e.target.value);setErr("");}} placeholder="000000" maxLength={6}/></div><div><label style={lbl}>Nova senha</label><input type="password" style={inp} value={newPw} onChange={e=>{setNewPw(e.target.value);setErr("");}} placeholder="••••••••"/></div><div><label style={lbl}>Confirmar</label><input type="password" style={inp} value={newPw2} onChange={e=>{setNewPw2(e.target.value);setErr("");}} placeholder="••••••••"/></div>{err&&<div style={{background:"#fef2f2",border:"1.5px solid #fecaca",borderRadius:"9px",padding:".65rem .9rem",color:"#b91c1c",fontSize:".83rem"}}>{err}</div>}<Btn onClick={confirmReset} style={{width:"100%",borderRadius:"9px"}}>✅ Redefinir Senha</Btn><button onClick={()=>{setMode("login");setErr("");setCode("");setNewPw("");setNewPw2("");}} style={{background:"none",border:"none",color:G.g400,fontSize:".8rem",cursor:"pointer",fontFamily:"inherit",textDecoration:"underline",textAlign:"center"}}>Voltar ao login</button></div></>}
+    </div></div>
+  );
+}
+
+function Admin(props){
+  const {conds,feitos,notifs,saveFeitos,saveNotifs,setView}=props;
+  const [tab,setTab]=useState("agenda");const [sending,setSending]=useState(false);const [toast,setToast]=useState("");
+  const ativos=conds.filter(c=>c.ativo!==false);const tots=ativos.reduce((a,c)=>a+(c.servicos||[]).length,0);const fts=ativos.reduce((a,c)=>a+(c.servicos||[]).filter(s=>feitos[c.id+"|"+s.nome]).length,0);const pct=tots>0?Math.round(fts/tots*100):0;const visits=getVisits(conds,7);const pending=props.complaints.filter(c=>c.status==="pending").length;const hoje=new Date();hoje.setHours(0,0,0,0);const pendN=getVisits(conds,3).filter(v=>{const d=Math.round((v.date-hoje)/86400000);return d>=1&&d<=3&&!notifs[v.cond.id+"|"+v.svc.nome+"|"+dkey(v.date)];}).length;
+  function showToast(msg){setToast(msg);setTimeout(()=>setToast(""),3500);}
+  async function checkNotifs(){const h=new Date();h.setHours(0,0,0,0);const pend=getVisits(conds,3).filter(v=>{const d=Math.round((v.date-h)/86400000);return d>=1&&d<=3&&!notifs[v.cond.id+"|"+v.svc.nome+"|"+dkey(v.date)];}).map(v=>({...v,nk:v.cond.id+"|"+v.svc.nome+"|"+dkey(v.date),dias:Math.round((v.date-h)/86400000)}));if(!pend.length){showToast("✅ Nenhum lembrete pendente");return;}setSending(true);let sent=0,fail=0;const newN={...notifs};for(const {cond,svc,date,nk,dias} of pend){const ds=date.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});try{await sendEmail({servico:"⚠️ Visita em "+dias+" dia"+(dias>1?"s":""),data:ds,horario:cond.nome+" — "+svc.nome,nome:"Echo Jardinagem",telefone:cond.telefone||"—",endereco:cond.endereco||"—",observacoes:"Plano: "+(cond.plano||"Essencial")+" | "+svc.freq+" | "+schedTxt(svc)});newN[nk]={at:new Date().toISOString(),ok:true};sent++;}catch(e){newN[nk]={at:new Date().toISOString(),ok:false};fail++;}}saveNotifs(newN);setSending(false);showToast("✅ "+sent+" lembrete"+(sent!==1?"s":"")+" enviado"+(fail>0?" · "+fail+" falhou":""));}
+  const TABS=[{id:"agenda",l:"📋 Agenda"},{id:"proximas",l:"🗓️ Próximas"+(visits.length?" ("+visits.length+")":"")},{id:"reclamacoes",l:"📝 Reclamações"+(pending?" ("+pending+")":"")},{id:"resultados",l:"📸 Resultados"},{id:"condominios",l:"🏢 Condomínios"},{id:"config",l:"⚙️ Config"}];
+  return(
+    <div style={{maxWidth:"760px",margin:"0 auto"}}>
+      {toast&&<div style={{position:"fixed",top:"1rem",right:"1rem",background:G.c800,color:"#fff",padding:".75rem 1.2rem",borderRadius:"12px",fontSize:".85rem",fontWeight:600,zIndex:2000,boxShadow:"0 4px 16px rgba(0,0,0,.3)",maxWidth:"280px"}}>{toast}</div>}
+      <div style={{background:"linear-gradient(135deg,"+G.c900+","+G.c800+")",padding:"1.1rem 1.5rem"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:tots>0?".9rem":"0",gap:".5rem"}}>
+          <div><div style={{color:G.c400,fontSize:".68rem",fontWeight:700,letterSpacing:".09em",textTransform:"uppercase"}}>🌿 Echo Jardinagem</div><div style={{color:"#fff",fontWeight:800,fontSize:"1rem",marginTop:".1rem"}}>Painel Administrativo</div></div>
+          <div style={{display:"flex",gap:".4rem",flexShrink:0}}>
+            <button onClick={checkNotifs} disabled={sending} style={{background:pendN>0?"#f59e0b":"rgba(255,255,255,.15)",border:"1px solid rgba(255,255,255,.25)",color:"#fff",borderRadius:"100px",padding:".45rem .85rem",fontSize:".74rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>{sending?"Enviando...":pendN>0?"🔔 "+pendN+" pendente"+(pendN>1?"s":""):"🔔 Lembretes"}</button>
+            <button onClick={()=>setView("home")} style={{background:"rgba(255,255,255,.15)",border:"1px solid rgba(255,255,255,.25)",color:"#fff",borderRadius:"100px",padding:".45rem .85rem",fontSize:".74rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>Sair</button>
+          </div>
+        </div>
+        {tots>0&&<div><div style={{display:"flex",justifyContent:"space-between",marginBottom:".35rem"}}><span style={{fontSize:".72rem",color:G.c300}}>{mesLbl()}</span><strong style={{fontSize:".72rem",color:G.c400}}>{fts}/{tots} · {pct}%</strong></div><div style={{background:"rgba(255,255,255,.15)",borderRadius:"100px",height:"6px",overflow:"hidden"}}><div style={{background:"linear-gradient(90deg,"+G.c500+","+G.c400+")",height:"100%",width:pct+"%",borderRadius:"100px",transition:"width .5s"}}/></div></div>}
+      </div>
+      <div style={{background:"#fff",borderBottom:"2px solid "+G.g200,display:"flex",overflowX:"auto"}}>{TABS.map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{background:"none",border:"none",borderBottom:tab===t.id?"2.5px solid "+G.c500:"2.5px solid transparent",marginBottom:"-2px",padding:".75rem .9rem",fontSize:".8rem",fontWeight:tab===t.id?700:500,color:tab===t.id?G.c700:G.g400,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"inherit"}}>{t.l}</button>)}</div>
+      <div style={{padding:"1.2rem"}}>
+        {tab==="agenda"&&<AgendaTab {...props}/>}
+        {tab==="proximas"&&<ProximasTab {...props}/>}
+        {tab==="reclamacoes"&&<ReclamacoesTab {...props}/>}
+        {tab==="resultados"&&<ResultadosTab {...props}/>}
+        {tab==="condominios"&&<CondominiosTab {...props}/>}
+        {tab==="config"&&<ConfigTab {...props}/>}
+      </div>
+    </div>
+  );
+}
+
+function AgendaTab({conds,feitos,saveFeitos}){
+  const ativos=conds.filter(c=>c.ativo!==false);if(!ativos.length)return <Empty icon="🏢" title="Nenhum condomínio cadastrado" sub='Vá em "Condomínios" para adicionar'/>;
+  function tog(cid,svc){const k=cid+"|"+svc;const nf={...feitos,[k]:!feitos[k]};if(!nf[k])delete nf[k];saveFeitos(nf);}
+  return(<div style={{display:"flex",flexDirection:"column",gap:".9rem"}}>{ativos.map(c=>{const svcs=c.servicos||[];const done=svcs.filter(s=>feitos[c.id+"|"+s.nome]).length;const all=done===svcs.length&&svcs.length>0;return(<div key={c.id} style={{background:"#fff",borderRadius:"14px",border:"1.5px solid "+(all?G.c400:G.g200),overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,.06)"}}><div style={{background:"linear-gradient(135deg,"+(all?G.c700+","+G.c800:G.c800+","+G.c900)+")",padding:".85rem 1.2rem",display:"flex",alignItems:"center",justifyContent:"space-between"}}><div><div style={{color:"#fff",fontWeight:700,fontSize:".9rem"}}>{c.nome}</div>{c.contato&&<div style={{color:G.c300,fontSize:".7rem",marginTop:".1rem"}}>👤 {c.contato}{c.telefone?" · "+c.telefone:""}</div>}</div><div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:".3rem"}}><div style={{background:all?G.c500:"rgba(255,255,255,.15)",color:"#fff",borderRadius:"100px",padding:".22rem .7rem",fontSize:".73rem",fontWeight:700}}>{done}/{svcs.length}{all?" ✅":""}</div><PBadge plano={c.plano}/></div></div>{!svcs.length?<div style={{padding:"1rem 1.2rem",color:G.g400,fontSize:".83rem"}}>Nenhum serviço</div>:<div style={{padding:"0 1.2rem"}}>{svcs.map((s,i)=>{const k=c.id+"|"+s.nome;const ck=!!feitos[k];return(<div key={i} onClick={()=>tog(c.id,s.nome)} style={{display:"flex",alignItems:"center",gap:".8rem",padding:".78rem 0",borderBottom:i<svcs.length-1?"1px solid "+G.c50:"none",cursor:"pointer",userSelect:"none"}}><div style={{width:"22px",height:"22px",borderRadius:"6px",border:"2px solid "+(ck?G.c500:G.c100),background:ck?G.c500:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .2s",color:"#fff",fontSize:".72rem",fontWeight:900}}>{ck?"✓":""}</div><div style={{flex:1}}><div style={{fontSize:".85rem",fontWeight:600,color:ck?G.g400:G.g800,textDecoration:ck?"line-through":"none"}}>{s.nome}</div><div style={{fontSize:".71rem",color:G.g400,marginTop:".08rem"}}>🔄 {s.freq}{schedTxt(s)?" · "+schedTxt(s):""}</div></div></div>);})}</div>}</div>);})}</div>);
+}
+
+function ProximasTab({conds,notifs}){
+  const visits=getVisits(conds,7);const hoje=new Date();hoje.setHours(0,0,0,0);
+  if(!visits.length)return <Empty icon="🗓️" title="Nenhuma visita nos próximos 7 dias" sub="Configure os dias nos serviços de cada condomínio"/>;
+  const grp={};visits.forEach(v=>{const dk=dkey(v.date);if(!grp[dk])grp[dk]=[];grp[dk].push(v);});
+  return(<div style={{display:"flex",flexDirection:"column",gap:".9rem"}}>{Object.entries(grp).map(([dk,vs])=>{const d=new Date(dk+"T12:00:00");const dias=Math.round((d-hoje)/86400000);const urg=dias<=2;const dlbl=dias===1?"Amanhã ⚡":dias===2?"Em 2 dias ⚠️":d.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});return(<div key={dk} style={{background:"#fff",borderRadius:"14px",border:"1.5px solid "+(urg?"#fbbf24":G.g200),overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,.06)"}}><div style={{background:"linear-gradient(135deg,"+(urg?"#92400e,#78350f":G.c800+","+G.c900)+")",padding:".85rem 1.2rem",display:"flex",alignItems:"center",justifyContent:"space-between"}}><div><div style={{color:"#fff",fontWeight:700,fontSize:".88rem"}}>{dlbl.charAt(0).toUpperCase()+dlbl.slice(1)}</div><div style={{color:urg?"#fcd34d":G.c300,fontSize:".7rem",marginTop:".1rem"}}>{d.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"})}</div></div><div style={{background:urg?"#f59e0b":"rgba(255,255,255,.15)",color:"#fff",borderRadius:"100px",padding:".22rem .7rem",fontSize:".72rem",fontWeight:700,flexShrink:0}}>{dias} dia{dias>1?"s":""}</div></div><div style={{padding:"0 1.2rem"}}>{vs.map((v,i)=>{const nk=v.cond.id+"|"+v.svc.nome+"|"+dk;const n=notifs[nk];const nb=n?(n.ok?<span style={{fontSize:".72rem",fontWeight:700,padding:".2rem .6rem",borderRadius:"100px",background:G.c100,color:G.c600,flexShrink:0}}>✉️ Enviado</span>:<span style={{fontSize:".72rem",fontWeight:700,padding:".2rem .6rem",borderRadius:"100px",background:"#fef2f2",color:"#ef4444",flexShrink:0}}>❌ Falhou</span>):<span style={{fontSize:".72rem",fontWeight:700,padding:".2rem .6rem",borderRadius:"100px",background:"#fef3c7",color:"#f59e0b",flexShrink:0}}>⏳ Pendente</span>;return(<div key={i} style={{display:"flex",alignItems:"center",gap:".8rem",padding:".78rem 0",borderBottom:i<vs.length-1?"1px solid "+G.c50:"none"}}><div style={{flex:1}}><div style={{fontSize:".86rem",fontWeight:700,color:G.c800}}>{v.cond.nome}</div><div style={{fontSize:".74rem",color:G.g600,marginTop:".12rem"}}>{v.svc.nome} · {v.svc.freq}</div></div>{nb}</div>);})}</div></div>);})}  </div>);
+}
+
+function ReclamacoesTab({conds,complaints,saveComplaints}){
+  const [filter,setFilter]=useState("all");const [editing,setEditing]=useState(null);
+  const list=complaints.filter(c=>filter==="all"||c.status===filter).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  function upd(id,data){saveComplaints(complaints.map(c=>c.id===id?{...c,...data}:c));setEditing(null);}
+  const filters=[{v:"all",l:"Todas ("+complaints.length+")"},{v:"pending",l:"⏳ Aguardando"},{v:"in_progress",l:"🔧 Andamento"},{v:"resolved",l:"✅ Resolvidas"}];
+  return(<div><div style={{display:"flex",gap:".45rem",marginBottom:"1.1rem",flexWrap:"wrap"}}>{filters.map(f=><button key={f.v} onClick={()=>setFilter(f.v)} style={{padding:".38rem .85rem",borderRadius:"100px",border:"1.5px solid "+(filter===f.v?G.c500:G.g200),background:filter===f.v?G.c500:"#fff",color:filter===f.v?"#fff":G.g600,fontSize:".78rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>{f.l}</button>)}</div>{!list.length?<Empty icon="📋" title="Nenhuma reclamação"/>:<div style={{display:"flex",flexDirection:"column",gap:".75rem"}}>{list.map(c=>{const cd=conds.find(x=>x.id===c.condoId);const isEd=editing===c.id;return(<div key={c.id} style={{background:"#fff",borderRadius:"12px",border:"1.5px solid "+G.g200,overflow:"hidden",boxShadow:"0 1px 6px rgba(0,0,0,.04)"}}><div style={{padding:".8rem 1.1rem",borderBottom:"1px solid "+G.c50,display:"flex",alignItems:"center",justifyContent:"space-between",gap:".5rem",flexWrap:"wrap"}}><div><div style={{fontWeight:700,fontSize:".88rem",color:G.c800}}>{c.name} · Apto {c.apt}</div><div style={{fontSize:".72rem",color:G.g400,marginTop:".1rem"}}>{cd?cd.nome:"—"} · {fmt(c.date)}</div></div><div style={{display:"flex",alignItems:"center",gap:".45rem",flexShrink:0}}><SBadge status={c.status}/><button onClick={()=>setEditing(isEd?null:c.id)} style={{background:G.c50,border:"1.5px solid "+G.c100,color:G.c700,borderRadius:"8px",padding:".3rem .65rem",fontSize:".78rem",cursor:"pointer",fontFamily:"inherit",fontWeight:600}}>{isEd?"Fechar":"Responder"}</button></div></div><div style={{padding:".8rem 1.1rem"}}><p style={{fontSize:".87rem",color:G.g600,lineHeight:1.65,margin:0}}>{c.desc}</p>{c.photoUrl&&<img src={c.photoUrl} alt="" style={{marginTop:".7rem",width:"100%",maxHeight:"180px",objectFit:"cover",borderRadius:"8px"}}/>}{c.adminNote&&<div style={{marginTop:".8rem",background:G.c50,borderRadius:"8px",padding:".75rem",border:"1px solid "+G.c100}}><span style={{fontSize:".72rem",color:G.c700,fontWeight:700}}>Resposta: </span><span style={{fontSize:".85rem",color:G.g600}}>{c.adminNote}</span></div>}</div>{isEd&&<EditComplaint complaint={c} onSave={d=>upd(c.id,d)}/>}</div>);})}</div>}</div>);
+}
+
+function EditComplaint({complaint,onSave}){
+  const [status,setStatus]=useState(complaint.status);const [note,setNote]=useState(complaint.adminNote||"");
+  return(<div style={{padding:"1rem 1.1rem",borderTop:"1px solid "+G.c50,background:G.c50}}><div style={{marginBottom:".7rem"}}><label style={lbl}>Status</label><div style={{display:"flex",gap:".4rem",flexWrap:"wrap"}}>{Object.entries(STATUS).map(entry=>{const v=entry[0];const s=entry[1];return <button key={v} onClick={()=>setStatus(v)} style={{padding:".35rem .75rem",borderRadius:"100px",border:"1.5px solid "+(status===v?s.c:G.g200),background:status===v?s.bg:"#fff",color:status===v?s.c:G.g600,fontSize:".78rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>{s.i} {s.l}</button>;})}</div></div><div style={{marginBottom:".8rem"}}><label style={lbl}>Resposta para o morador</label><textarea style={{...inp,resize:"vertical",minHeight:"70px"}} value={note} onChange={e=>setNote(e.target.value)} placeholder="Ex: Serviço realizado em 15/06..."/></div><Btn onClick={()=>onSave({status,adminNote:note})} style={{padding:".6rem 1.4rem",fontSize:".85rem"}}>💾 Salvar</Btn></div>);
+}
+
+function ResultadosTab({conds,posts,savePosts}){
+  const [condoId,setCondoId]=useState("");const [title,setTitle]=useState("");const [desc,setDesc]=useState("");const [beforeUrl,setBeforeUrl]=useState("");const [afterUrl,setAfterUrl]=useState("");
+  const sorted=[...posts].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  function publish(){if(!condoId||!title.trim())return;savePosts([...posts,{id:uid(),condoId,title,desc,beforeUrl,afterUrl,date:new Date().toISOString()}]);setCondoId("");setTitle("");setDesc("");setBeforeUrl("");setAfterUrl("");}
+  return(<div><div style={{background:"#fff",borderRadius:"14px",border:"1.5px solid "+G.g200,padding:"1.3rem",marginBottom:"1.3rem",boxShadow:"0 2px 10px rgba(0,0,0,.06)"}}><h3 style={{color:G.c800,fontWeight:800,fontSize:".95rem",marginBottom:"1.1rem"}}>📸 Nova Publicação — Antes & Depois</h3><div style={{display:"flex",flexDirection:"column",gap:".8rem"}}><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".7rem"}}><div><label style={lbl}>Condomínio *</label><select style={inp} value={condoId} onChange={e=>setCondoId(e.target.value)}><option value="">Selecione</option>{conds.map(c=><option key={c.id} value={c.id}>{c.nome}</option>)}</select></div><div><label style={lbl}>Título *</label><input style={inp} value={title} onChange={e=>setTitle(e.target.value)} placeholder="Ex: Corte de grama realizado"/></div></div><div><label style={lbl}>Descrição</label><textarea style={{...inp,resize:"vertical",minHeight:"75px"}} value={desc} onChange={e=>setDesc(e.target.value)} placeholder="Descreva o serviço..."/></div><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".7rem"}}><div><label style={lbl}>🟡 Foto de Antes</label><ImagePicker value={beforeUrl} onChange={setBeforeUrl} label="Adicionar foto de antes" tag="ANTES"/>{beforeUrl&&<button onClick={()=>setBeforeUrl("")} style={{marginTop:".3rem",background:"none",border:"none",color:"#ef4444",fontSize:".75rem",cursor:"pointer",fontFamily:"inherit"}}>✕ Remover</button>}</div><div><label style={lbl}>🟢 Foto de Depois</label><ImagePicker value={afterUrl} onChange={setAfterUrl} label="Adicionar foto de depois" tag="DEPOIS"/>{afterUrl&&<button onClick={()=>setAfterUrl("")} style={{marginTop:".3rem",background:"none",border:"none",color:"#ef4444",fontSize:".75rem",cursor:"pointer",fontFamily:"inherit"}}>✕ Remover</button>}</div></div><Btn onClick={publish} style={{width:"100%",borderRadius:"9px"}}>📤 Publicar</Btn></div></div>{sorted.length>0&&<div><div style={{fontSize:".82rem",color:G.g600,fontWeight:600,marginBottom:".75rem"}}>Publicações ({sorted.length})</div><div style={{display:"flex",flexDirection:"column",gap:".6rem"}}>{sorted.map(p=>{const cd=conds.find(x=>x.id===p.condoId);return(<div key={p.id} style={{background:"#fff",borderRadius:"10px",border:"1.5px solid "+G.g200,padding:".8rem 1rem",display:"flex",alignItems:"center",gap:".8rem",boxShadow:"0 1px 4px rgba(0,0,0,.04)"}}><div style={{flex:1,minWidth:0}}><div style={{fontWeight:700,color:G.c800,fontSize:".87rem",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{p.title}</div><div style={{fontSize:".72rem",color:G.g400,marginTop:".1rem"}}>{cd?cd.nome:"—"} · {fmt(p.date)}</div></div><button onClick={()=>savePosts(posts.filter(x=>x.id!==p.id))} style={{background:"#fff5f5",border:"1.5px solid #fecaca",color:"#ef4444",borderRadius:"8px",padding:".3rem .6rem",fontSize:".78rem",cursor:"pointer",fontFamily:"inherit",flexShrink:0}}>🗑️</button></div>);})}</div></div>}</div>);
+}
+
+function CondominiosTab({conds,saveConds}){
+  const [form,setForm]=useState(null);const [fSvcs,setFSvcs]=useState([]);const [selDays,setSelDays]=useState([]);const [selPar,setSelPar]=useState("impar");const [fPlano,setFPlano]=useState("Essencial");
+  function openForm(c=null){setForm(c||{id:"",nome:"",endereco:"",contato:"",telefone:"",ativo:true,plano:"Essencial",code:codeGen(),servicos:[]});setFSvcs(c?[...c.servicos]:[]);setFPlano(c?c.plano||"Essencial":"Essencial");setSelDays([]);setSelPar("impar");}
+  function closeForm(){setForm(null);}
+  function saveForm(){if(!form.nome.trim())return;const c={...form,plano:fPlano,servicos:fSvcs};saveConds(c.id?conds.map(x=>x.id===c.id?c:x):[...conds,{...c,id:uid()}]);closeForm();}
+  function addSvc(freq,svcNome){const f2=freq||"Semanal";const ag=f2==="Mensal"?{diaMes:1}:{diasSemana:[...selDays],semPar:selPar};setFSvcs(prev=>[...prev,{nome:svcNome,freq:f2,agendamento:ag}]);setSelDays([]);}
+  function remSvc(i){setFSvcs(prev=>prev.filter((_,j)=>j!==i));}
+  function togDay(d){setSelDays(prev=>prev.includes(d)?prev.filter(x=>x!==d):[...prev,d].sort((a,b)=>a-b));}
+  return(<div><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"1.1rem"}}><div style={{fontSize:".83rem",color:G.g600}}>{conds.length} condomínio{conds.length!==1?"s":""}</div><Btn onClick={()=>openForm()} style={{padding:".55rem 1.1rem",fontSize:".84rem"}}>+ Novo</Btn></div>{!conds.length?<Empty icon="🏢" title="Nenhum condomínio ainda" sub='Clique em "+ Novo" para começar'/>:<div style={{display:"flex",flexDirection:"column",gap:".75rem"}}>{conds.map(c=>(<div key={c.id} style={{background:"#fff",borderRadius:"12px",border:"1.5px solid "+G.g200,padding:"1rem 1.2rem",display:"flex",alignItems:"center",gap:"1rem",boxShadow:"0 1px 6px rgba(0,0,0,.04)"}}><div style={{flex:1,minWidth:0}}><div style={{fontWeight:700,fontSize:".9rem",color:G.c800}}>{c.nome}</div>{c.endereco&&<div style={{fontSize:".73rem",color:G.g400,marginTop:".1rem"}}>📍 {c.endereco}</div>}<div style={{fontSize:".73rem",marginTop:".28rem",display:"flex",alignItems:"center",gap:".45rem",flexWrap:"wrap"}}><PBadge plano={c.plano}/><span style={{color:G.c500,fontWeight:600}}>{(c.servicos||[]).length} serviço{(c.servicos||[]).length!==1?"s":""}</span><span style={{color:G.g400}}>Código: <strong style={{color:G.c700}}>{c.code}</strong></span></div></div><div style={{display:"flex",gap:".4rem",flexShrink:0}}><button onClick={()=>openForm(c)} style={{background:G.c50,border:"1.5px solid "+G.c200,color:G.c700,borderRadius:"8px",padding:".38rem .7rem",fontSize:".78rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>✏️</button><button onClick={()=>{if(confirm("Remover?"))saveConds(conds.filter(x=>x.id!==c.id));}} style={{background:"#fff5f5",border:"1.5px solid #fecaca",color:"#ef4444",borderRadius:"8px",padding:".38rem .7rem",fontSize:".78rem",cursor:"pointer",fontFamily:"inherit"}}>🗑️</button></div></div>))}</div>}
+  {form&&<div onClick={e=>{if(e.target===e.currentTarget)closeForm();}} style={{position:"fixed",inset:0,background:"rgba(0,0,0,.55)",zIndex:999,display:"flex",alignItems:"flex-end",justifyContent:"center"}}><div style={{background:"#fff",borderRadius:"20px 20px 0 0",padding:"1.5rem",width:"100%",maxWidth:"520px",maxHeight:"93vh",overflowY:"auto"}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"1.2rem"}}><h2 style={{fontSize:"1rem",fontWeight:800,color:G.c800}}>{form.id?"✏️ Editar":"🏢 Novo"} Condomínio</h2><button onClick={closeForm} style={{background:"none",border:"none",fontSize:"1.4rem",cursor:"pointer",color:"#aaa",lineHeight:1}}>✕</button></div><div style={{display:"flex",flexDirection:"column",gap:".85rem"}}><div><label style={lbl}>Nome *</label><input style={inp} value={form.nome} onChange={e=>setForm(f=>({...f,nome:e.target.value}))} placeholder="Condomínio das Flores"/></div><div><label style={lbl}>Endereço</label><input style={inp} value={form.endereco||""} onChange={e=>setForm(f=>({...f,endereco:e.target.value}))} placeholder="Rua, número, bairro"/></div><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".7rem"}}><div><label style={lbl}>Contato</label><input style={inp} value={form.contato||""} onChange={e=>setForm(f=>({...f,contato:e.target.value}))} placeholder="Síndico"/></div><div><label style={lbl}>Telefone</label><input style={inp} value={form.telefone||""} onChange={e=>setForm(f=>({...f,telefone:e.target.value}))} placeholder="(42) 9..."/></div></div><div><label style={lbl}>Plano Contratado</label><div style={{display:"flex",flexDirection:"column",gap:".4rem",marginTop:".4rem"}}>{Object.entries(PLANOS).map(entry=>{const k=entry[0];const p=entry[1];const on=fPlano===k;return(<button key={k} onClick={()=>setFPlano(k)} style={{display:"flex",alignItems:"center",gap:".8rem",padding:".7rem",borderRadius:"10px",border:"1.5px solid "+(on?p.c:G.g200),background:on?p.bg:"#fff",cursor:"pointer",textAlign:"left",fontFamily:"inherit"}}><span style={{fontSize:"1.2rem"}}>{p.ico}</span><div style={{flex:1}}><div style={{fontWeight:700,fontSize:".85rem",color:on?p.c:G.c800}}>{k}</div></div><div style={{width:"16px",height:"16px",borderRadius:"50%",border:"2px solid "+(on?p.c:G.g200),background:on?p.c:"#fff",position:"relative",flexShrink:0}}>{on&&<div style={{position:"absolute",inset:"3px",borderRadius:"50%",background:"#fff"}}/>}</div></button>);})}</div></div><div><label style={lbl}>Código de Acesso do Portal</label><div style={{display:"flex",gap:".5rem",alignItems:"center"}}><input style={{...inp,flex:1,letterSpacing:".08em",fontWeight:700}} value={form.code||""} onChange={e=>setForm(f=>({...f,code:e.target.value}))}/><button onClick={()=>setForm(f=>({...f,code:codeGen()}))} style={{background:G.c50,border:"1.5px solid "+G.c200,color:G.c700,borderRadius:"9px",padding:".65rem .9rem",cursor:"pointer",fontFamily:"inherit",fontSize:".8rem",fontWeight:600,flexShrink:0,whiteSpace:"nowrap"}}>🔄 Gerar</button></div><div style={{fontSize:".72rem",color:G.g400,marginTop:".3rem"}}>Compartilhe com os moradores para acesso ao portal</div></div><SvcForm fSvcs={fSvcs} selDays={selDays} selPar={selPar} togDay={togDay} setSelPar={setSelPar} addSvc={addSvc} remSvc={remSvc}/><label style={{display:"flex",alignItems:"center",gap:".6rem",cursor:"pointer"}}><input type="checkbox" checked={form.ativo!==false} onChange={e=>setForm(f=>({...f,ativo:e.target.checked}))} style={{width:"16px",height:"16px",cursor:"pointer",accentColor:G.c500}}/><span style={{fontSize:".85rem",fontWeight:600,color:G.g600}}>Condomínio ativo</span></label><div style={{display:"flex",gap:".7rem"}}><button onClick={closeForm} style={{flex:1,background:"none",border:"1.5px solid "+G.g200,color:G.g600,borderRadius:"100px",padding:".75rem",fontSize:".88rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>Cancelar</button><Btn onClick={saveForm} style={{flex:2,borderRadius:"100px",padding:".75rem",fontSize:".88rem"}}>💾 Salvar</Btn></div></div></div></div>}</div>);
+}
+
+function SvcForm({fSvcs,selDays,selPar,togDay,setSelPar,addSvc,remSvc}){
+  const [svcNome,setSvcNome]=useState(ALL_SVCS[0]);const [freq,setFreq]=useState("Semanal");
+  return(<div style={{borderTop:"1px solid "+G.g200,paddingTop:".85rem"}}><label style={lbl}>Serviços Contratados</label>{!fSvcs.length&&<div style={{fontSize:".8rem",color:G.g400,marginBottom:".6rem"}}>Nenhum serviço adicionado</div>}<div style={{display:"flex",flexDirection:"column",gap:".4rem",marginBottom:".6rem"}}>{fSvcs.map((s,i)=>(<div key={i} style={{display:"flex",alignItems:"flex-start",gap:".6rem",background:G.c50,borderRadius:"9px",padding:".6rem .9rem",border:"1px solid "+G.c100}}><div style={{flex:1}}><div style={{fontSize:".84rem",fontWeight:700,color:G.c800}}>{s.nome}</div><div style={{fontSize:".73rem",color:G.c500,marginTop:".1rem"}}>{s.freq}{schedTxt(s)?" · "+schedTxt(s):""}</div></div><button onClick={()=>remSvc(i)} style={{background:"none",border:"none",color:"#ef4444",cursor:"pointer",fontSize:"1rem",lineHeight:1,flexShrink:0}}>✕</button></div>))}</div><div style={{background:"#f9fffe",border:"1.5px solid "+G.c100,borderRadius:"12px",padding:".9rem"}}><div style={{fontSize:".72rem",fontWeight:700,color:G.c700,marginBottom:".6rem",textTransform:"uppercase",letterSpacing:".04em"}}>Adicionar serviço</div><div style={{display:"flex",gap:".4rem",marginBottom:".6rem"}}><select style={{...inp,flex:2}} value={svcNome} onChange={e=>setSvcNome(e.target.value)}>{ALL_SVCS.map(s=><option key={s} value={s}>{s}</option>)}</select><select style={{...inp,flex:1}} value={freq} onChange={e=>setFreq(e.target.value)}><option>Semanal</option><option>Quinzenal</option><option>Mensal</option></select></div>{freq!=="Mensal"&&<div style={{marginBottom:".6rem"}}><div style={{fontSize:".72rem",color:G.g600,marginBottom:".4rem",fontWeight:600}}>Dias da semana:</div><div style={{display:"flex",gap:".28rem",flexWrap:"wrap",marginBottom:freq==="Quinzenal"?".5rem":"0"}}>{WDS.map((d,i)=><button key={i} onClick={()=>togDay(i)} style={{padding:".32rem .45rem",borderRadius:"7px",border:"1.5px solid "+(selDays.includes(i)?G.c500:G.g200),background:selDays.includes(i)?G.c500:"#fff",color:selDays.includes(i)?"#fff":G.g600,fontSize:".73rem",fontWeight:selDays.includes(i)?700:500,cursor:"pointer",minWidth:"36px",fontFamily:"inherit"}}>{d}</button>)}{freq==="Quinzenal"&&<div style={{display:"flex",gap:".4rem",width:"100%",marginTop:".3rem"}}><button onClick={()=>setSelPar("impar")} style={{flex:1,padding:".38rem",borderRadius:"7px",border:"1.5px solid "+(selPar==="impar"?G.c500:G.g200),background:selPar==="impar"?G.c500:"#fff",color:selPar==="impar"?"#fff":G.g600,fontSize:".72rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>Sem. ímpares</button><button onClick={()=>setSelPar("par")} style={{flex:1,padding:".38rem",borderRadius:"7px",border:"1.5px solid "+(selPar==="par"?G.c500:G.g200),background:selPar==="par"?G.c500:"#fff",color:selPar==="par"?"#fff":G.g600,fontSize:".72rem",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>Sem. pares</button></div>}</div>}</div><button onClick={()=>addSvc(freq,svcNome)} style={{width:"100%",background:G.c800,color:"#fff",border:"none",borderRadius:"9px",padding:".65rem",cursor:"pointer",fontWeight:700,fontSize:".85rem",fontFamily:"inherit"}}>+ Adicionar serviço</button></div></div>);
+}
+
+function ConfigTab({settings,saveSettings,setView}){
+  const [pw,setPw]=useState("");const [newPw,setNewPw]=useState("");const [msg,setMsg]=useState("");
+  function savePw(){if(pw!==settings.adminPassword){setMsg("Senha atual incorreta");return;}if(!newPw.trim()){setMsg("Digite a nova senha");return;}saveSettings({...settings,adminPassword:newPw});setPw("");setNewPw("");setMsg("✅ Senha alterada!");setTimeout(()=>setMsg(""),3000);}
+  return(<div style={{display:"flex",flexDirection:"column",gap:"1.3rem"}}><div style={{background:"#fff",borderRadius:"14px",border:"1.5px solid "+G.g200,padding:"1.3rem",boxShadow:"0 1px 6px rgba(0,0,0,.04)"}}><h3 style={{color:G.c800,fontWeight:800,fontSize:".92rem",marginBottom:"1rem"}}>🔑 Alterar Senha de Admin</h3><div style={{display:"flex",flexDirection:"column",gap:".7rem"}}><div><label style={lbl}>Senha atual</label><input type="password" style={inp} value={pw} onChange={e=>setPw(e.target.value)} placeholder="••••••••"/></div><div><label style={lbl}>Nova senha</label><input type="password" style={inp} value={newPw} onChange={e=>setNewPw(e.target.value)} placeholder="••••••••"/></div>{msg&&<div style={{fontSize:".83rem",color:msg.startsWith("✅")?G.c700:"#ef4444"}}>{msg}</div>}<Btn onClick={savePw} style={{width:"100%",borderRadius:"9px"}}>Alterar Senha</Btn></div></div><div style={{background:"#fff",borderRadius:"14px",border:"1.5px solid "+G.g200,padding:"1.3rem",boxShadow:"0 1px 6px rgba(0,0,0,.04)"}}><h3 style={{color:G.c800,fontWeight:800,fontSize:".92rem",marginBottom:".5rem"}}>🌿 Portal Público</h3><p style={{fontSize:".85rem",color:G.g600,lineHeight:1.65,marginBottom:"1rem"}}>Moradores acessam com o código de cada condomínio, cadastrado na aba Condomínios.</p><Btn onClick={()=>setView("home")} style={{padding:".6rem 1.2rem",fontSize:".85rem"}}>Ver Portal Público →</Btn></div></div>);
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
