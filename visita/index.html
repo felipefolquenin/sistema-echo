@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agende sua visita técnica gratuita — Echo Jardinagem</title>
+<meta name="description" content="Gestão de áreas verdes para condomínios em Guarapuava. Agende uma visita técnica gratuita de 30 minutos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1B4332;
+    --green-mid:#2D6A4F;
+    --mint:#D8F3DC;
+    --paper:#FBFAF6;
+    --ink:#22302A;
+    --muted:#6E8478;
+    --whats:#25D366;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 22px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    background:var(--green);
+    color:#fff;
+    padding:36px 0 52px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero svg.leaf{
+    position:absolute;right:-70px;top:30px;width:280px;opacity:.16;
+  }
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:38px;position:relative;z-index:2;}
+  .brand .mark{
+    width:44px;height:44px;border-radius:50%;
+    border:2px solid rgba(216,243,220,.9);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Montserrat';font-weight:800;font-size:12px;color:var(--mint);
+  }
+  .brand .word{font-family:'Montserrat';font-weight:800;font-size:19px;line-height:1;}
+  .brand .word small{display:block;font-family:'Inter';font-weight:600;font-size:10px;letter-spacing:4px;color:var(--mint);margin-top:3px;}
+
+  .kicker{
+    font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:var(--mint);margin-bottom:16px;position:relative;z-index:2;
+  }
+  h1{
+    font-family:'Montserrat';font-weight:800;
+    font-size:clamp(30px,7.5vw,40px);
+    line-height:1.14;letter-spacing:-0.5px;
+    position:relative;z-index:2;
+  }
+  h1 em{font-style:normal;color:var(--mint);}
+  .hero p{
+    margin-top:16px;font-size:17px;color:rgba(255,255,255,.86);
+    max-width:440px;position:relative;z-index:2;
+  }
+  .hero-cta{
+    display:block;margin-top:28px;background:var(--mint);color:var(--green);
+    font-family:'Montserrat';font-weight:800;font-size:17px;
+    text-align:center;text-decoration:none;
+    padding:18px 28px;border-radius:100px;
+    position:relative;z-index:2;
+    box-shadow:0 10px 26px rgba(0,0,0,.25);
+  }
+  .hero-note{
+    margin-top:14px;font-size:14px;color:rgba(255,255,255,.7);
+    text-align:center;position:relative;z-index:2;
+  }
+
+  /* ===== TRUST STRIP ===== */
+  .strip{
+    background:var(--mint);
+    padding:16px 0;
+  }
+  .strip .wrap{
+    display:flex;justify-content:space-between;gap:8px;
+    font-size:12.5px;font-weight:700;color:var(--green);
+    text-align:center;
+  }
+  .strip span{flex:1;}
+
+  /* ===== SECTIONS ===== */
+  section{padding:44px 0;}
+  h2{
+    font-family:'Montserrat';font-weight:800;
+    font-size:24px;color:var(--green);line-height:1.25;
+    margin-bottom:10px;
+  }
+  .lead{font-size:16px;color:#4C5B53;margin-bottom:26px;}
+
+  /* pains */
+  .pains{display:flex;flex-direction:column;gap:12px;margin-bottom:26px;}
+  .pain{
+    display:flex;align-items:center;gap:14px;
+    font-size:15.5px;font-weight:500;color:#4C5B53;
+  }
+  .pain b{
+    width:32px;height:32px;border-radius:50%;flex:0 0 32px;
+    background:#F3E3E0;color:#B3453A;
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .turn{
+    background:var(--green);color:#fff;border-radius:14px;
+    padding:22px 24px;font-size:16.5px;font-weight:600;line-height:1.55;
+  }
+  .turn em{font-style:normal;color:var(--mint);font-weight:800;}
+
+  /* steps */
+  .steps{display:flex;flex-direction:column;gap:20px;}
+  .step{display:flex;gap:16px;align-items:flex-start;}
+  .step b{
+    width:42px;height:42px;border-radius:50%;flex:0 0 42px;
+    background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Montserrat';font-weight:800;font-size:19px;
+  }
+  .step strong{display:block;color:var(--green);font-size:16.5px;}
+  .step span{font-size:15px;color:#5B6B60;}
+
+  /* portal */
+  .portal{background:var(--mint);}
+  .pcard{
+    background:#fff;border-radius:18px;padding:24px;
+    box-shadow:0 14px 34px rgba(27,67,50,.14);
+  }
+  .pcard .phead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .pcard .pid{font-family:'Montserrat';font-weight:800;font-size:16px;color:var(--green);}
+  .pcard .pstatus{background:var(--mint);color:var(--green);font-weight:700;font-size:13px;border-radius:100px;padding:6px 14px;}
+  .pcard .check{display:flex;flex-direction:column;gap:10px;}
+  .pcard .check div{display:flex;align-items:center;gap:10px;font-size:14.5px;color:#3E4E46;}
+  .pcard .check b{
+    width:26px;height:26px;border-radius:7px;flex:0 0 26px;
+    background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;
+  }
+  .pcard .photos{display:flex;gap:10px;margin-top:16px;}
+  .pcard .ph{flex:1;height:74px;border-radius:10px;display:flex;align-items:flex-end;padding:8px 12px;font-weight:700;font-size:13px;color:#fff;}
+  .pcard .ph.before{background:linear-gradient(160deg,#8FA98F,#5F7A62);}
+  .pcard .ph.after{background:linear-gradient(160deg,#2D6A4F,#1B4332);}
+  .portal .note{margin-top:18px;font-size:14.5px;font-weight:700;color:var(--green);}
+
+  /* ===== FORM ===== */
+  .form-section{background:var(--paper);}
+  .card-form{
+    background:#fff;border:1.5px solid #E4E2D9;border-radius:20px;
+    padding:28px 24px;
+  }
+  .field{margin-bottom:18px;}
+  label{
+    display:block;font-size:14px;font-weight:700;color:var(--green);
+    margin-bottom:7px;
+  }
+  input[type=text], input[type=tel], select{
+    width:100%;padding:15px 16px;font-size:16px;
+    font-family:'Inter';color:var(--ink);
+    border:1.5px solid #D7D5CB;border-radius:12px;
+    background:var(--paper);
+    -webkit-appearance:none;appearance:none;
+  }
+  input:focus, select:focus{outline:2px solid var(--green-mid);border-color:var(--green-mid);}
+  .chips{display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    border:1.5px solid #D7D5CB;background:var(--paper);
+    border-radius:100px;padding:11px 20px;
+    font-size:15px;font-weight:600;color:#5B6B60;
+    cursor:pointer;user-select:none;
+  }
+  .chip.on{background:var(--green);border-color:var(--green);color:#fff;}
+  .submit{
+    width:100%;margin-top:8px;
+    background:var(--whats);color:#fff;border:none;cursor:pointer;
+    font-family:'Montserrat';font-weight:800;font-size:17px;
+    padding:18px;border-radius:100px;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    box-shadow:0 10px 24px rgba(37,211,102,.35);
+  }
+  .submit:active{transform:scale(.985);}
+  .form-note{margin-top:14px;font-size:13.5px;color:var(--muted);text-align:center;}
+
+  /* footer */
+  footer{
+    background:var(--green);color:rgba(255,255,255,.8);
+    padding:34px 0;font-size:14px;text-align:center;
+  }
+  footer .fbrand{font-family:'Montserrat';font-weight:800;font-size:17px;color:#fff;margin-bottom:6px;}
+  footer a{color:var(--mint);text-decoration:none;font-weight:600;}
+
+  /* floating whatsapp */
+  .float-wa{
+    position:fixed;right:18px;bottom:18px;z-index:50;
+    width:60px;height:60px;border-radius:50%;
+    background:var(--whats);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 22px rgba(0,0,0,.28);
+  }
+
+  @media (min-width:700px){
+    .wrap{max-width:640px;}
+    .hero{padding:52px 0 68px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <svg class="leaf" viewBox="0 0 200 200" fill="none">
+    <path d="M30 170 C 20 90, 80 20, 170 30 C 180 120, 110 180, 30 170 Z" stroke="#D8F3DC" stroke-width="2.5"/>
+    <path d="M45 155 C 90 120, 130 80, 158 45" stroke="#D8F3DC" stroke-width="2.5"/>
+  </svg>
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark">echo</div>
+      <div class="word">echo<small>JARDINAGEM</small></div>
+    </div>
+    <div class="kicker">Condomínios · Guarapuava</div>
+    <h1>A área verde do seu condomínio, <em>sem você precisar pensar nela.</em></h1>
+    <p>A Echo assume a gestão completa: planejamento, equipe e execução são responsabilidade nossa — e você acompanha tudo pelo nosso portal.</p>
+    <a class="hero-cta" href="#agendar">Agendar visita técnica gratuita</a>
+    <div class="hero-note">30 minutos · sem compromisso · resposta no mesmo dia</div>
+  </div>
+</header>
+
+<!-- TRUST STRIP -->
+<div class="strip">
+  <div class="wrap">
+    <span>🌱 Gestão completa</span>
+    <span>📋 Relatório de cada visita</span>
+    <span>💻 Portal exclusivo</span>
+  </div>
+</div>
+
+<!-- PROBLEM / TURN -->
+<section>
+  <div class="wrap">
+    <h2>O problema nunca foi a grama.</h2>
+    <p class="lead">É ter que gerenciar a grama.</p>
+    <div class="pains">
+      <div class="pain"><b>✕</b> Jardineiro que falta</div>
+      <div class="pain"><b>✕</b> Serviço pela metade</div>
+      <div class="pain"><b>✕</b> Morador reclamando com o síndico</div>
+    </div>
+    <div class="turn">A Echo resolve na raiz: <em>nós assumimos a gestão da área verde.</em> Contratação de equipe, calendário de manutenção, execução e prestação de contas deixam de ser responsabilidade sua.</div>
+  </div>
+</section>
+
+<!-- PORTAL -->
+<section class="portal">
+  <div class="wrap">
+    <h2>Você vê tudo. Sem cobrar ninguém.</h2>
+    <p class="lead">Cada visita gera um registro no nosso Portal dos Condomínios — com checklist e fotos do resultado:</p>
+    <div class="pcard">
+      <div class="phead">
+        <div class="pid">Visita concluída</div>
+        <div class="pstatus">✓ Resolvida</div>
+      </div>
+      <div class="check">
+        <div><b>✓</b> Gramado e canteiros em dia</div>
+        <div><b>✓</b> Podas executadas</div>
+        <div><b>✓</b> Irrigação inspecionada</div>
+      </div>
+      <div class="photos">
+        <div class="ph before">antes</div>
+        <div class="ph after">depois</div>
+      </div>
+    </div>
+    <div class="note">Moradores registram solicitações direto no portal — sem passar pelo síndico.</div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section>
+  <div class="wrap">
+    <h2>Simples assim</h2>
+    <p class="lead">Do primeiro contato ao jardim em ordem:</p>
+    <div class="steps">
+      <div class="step"><b>1</b><div><strong>Visita técnica gratuita</strong><span>Conhecemos a área do condomínio — 30 minutos, sem compromisso.</span></div></div>
+      <div class="step"><b>2</b><div><strong>Proposta sob medida</strong><span>Valor mensal fixo, com tudo incluso. Sem surpresa.</span></div></div>
+      <div class="step"><b>3</b><div><strong>A Echo assume</strong><span>Equipe em campo e portal ativo em poucos dias.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="agendar">
+  <div class="wrap">
+    <h2>Agende sua visita técnica</h2>
+    <p class="lead">Preencha e a conversa continua no WhatsApp — respondemos no mesmo dia.</p>
+    <div class="card-form">
+      <div class="field">
+        <label for="nome">Seu nome</label>
+        <input type="text" id="nome" placeholder="Ex.: João" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="condominio">Nome do condomínio</label>
+        <input type="text" id="condominio" placeholder="Ex.: Residencial Primavera">
+      </div>
+      <div class="field">
+        <label>Você é...</label>
+        <div class="chips" id="papel">
+          <div class="chip" data-v="Síndico(a)">Síndico(a)</div>
+          <div class="chip" data-v="Morador(a)">Morador(a)</div>
+          <div class="chip" data-v="Administradora">Administradora</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Melhor período para a visita</label>
+        <div class="chips" id="periodo">
+          <div class="chip" data-v="Manhã">Manhã</div>
+          <div class="chip" data-v="Tarde">Tarde</div>
+          <div class="chip" data-v="A combinar">A combinar</div>
+        </div>
+      </div>
+      <button class="submit" onclick="enviar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2c.1.1.1.3 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 .9c.3.2.5.3.5.4.1.1.1.7-.1 1.5Z"/></svg>
+        Agendar pelo WhatsApp
+      </button>
+      <div class="form-note">Sem cadastro, sem e-mail. Você fala direto com a Echo.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">echo · JARDINAGEM</div>
+    <div>Gestão de áreas verdes para condomínios</div>
+    <div style="margin-top:8px;">Guarapuava, PR · <a href="https://wa.me/5542988408840">(42) 98840-8840</a></div>
+    <div style="margin-top:4px;"><a href="https://echojardinagem.com.br">echojardinagem.com.br</a></div>
+  </div>
+</footer>
+
+<!-- floating whatsapp -->
+<a class="float-wa" href="https://wa.me/5542988408840?text=Ol%C3%A1!%20Vim%20pelo%20Instagram%20e%20quero%20agendar%20uma%20visita%20t%C3%A9cnica." aria-label="WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2c.1.1.1.3 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 .9c.3.2.5.3.5.4.1.1.1.7-.1 1.5Z"/></svg>
+</a>
+
+<script>
+  // seleção de chips (uma por grupo)
+  document.querySelectorAll('.chips').forEach(function(group){
+    group.addEventListener('click', function(e){
+      var chip = e.target.closest('.chip');
+      if(!chip) return;
+      group.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('on'); });
+      chip.classList.add('on');
+    });
+  });
+
+  function val(id){ return (document.getElementById(id).value || '').trim(); }
+  function chipVal(id){
+    var on = document.querySelector('#'+id+' .chip.on');
+    return on ? on.getAttribute('data-v') : '';
+  }
+
+  function enviar(){
+    var nome = val('nome');
+    var cond = val('condominio');
+    var papel = chipVal('papel');
+    var periodo = chipVal('periodo');
+
+    var linhas = ['Olá! Vim pelo Instagram e quero agendar uma *visita técnica gratuita*.'];
+    if(nome) linhas.push('Nome: ' + nome);
+    if(cond) linhas.push('Condomínio: ' + cond);
+    if(papel) linhas.push('Sou: ' + papel);
+    if(periodo) linhas.push('Melhor período: ' + periodo);
+
+    var msg = encodeURIComponent(linhas.join('\n'));
+    window.open('https://wa.me/5542988408840?text=' + msg, '_blank');
+  }
+</script>
+
+</body>
+</html>
