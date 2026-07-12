@@ -1,0 +1,643 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Echo Jardinagem | Jardinagem Profissional em Guarapuava - PR</title>
+<meta name="description" content="Echo Jardinagem em Guarapuava: corte de grama, poda de árvores, irrigação inteligente e iluminação de jardim. Orçamento gratuito e sem compromisso. ☎ (42) 98840-8840">
+<meta name="keywords" content="jardinagem Guarapuava, corte de grama Guarapuava, poda de árvores Guarapuava, manutenção jardins Guarapuava, jardineiro Guarapuava, irrigação jardim Guarapuava, paisagismo Guarapuava">
+<meta name="geo.region" content="BR-PR">
+<meta name="geo.placename" content="Guarapuava">
+<meta property="og:title" content="Echo Jardinagem | Jardinagem Profissional em Guarapuava - PR">
+<meta property="og:description" content="Corte de grama, poda de árvores, irrigação e iluminação em Guarapuava. Orçamento gratuito e sem compromisso. Ligue (42) 98840-8840">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--c900:#0d2b1a;--c800:#1a4a2e;--c700:#2d6a4f;--c600:#40916c;--c500:#52b788;--c400:#74c69d;--c300:#95d5b2;--c200:#b7e4c7;--c100:#d8f3dc;--c50:#f0faf3;--g800:#1f2d26;--g600:#4a5a50;--g400:#8a9a8f;--g200:#e2ebe4;--r:12px;--sh:0 4px 20px rgba(0,0,0,.12)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--c900)}
+body{font-family:'Inter','Segoe UI',sans-serif;background:#fff;color:var(--g800);line-height:1.6;overflow:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(13,43,26,.96);backdrop-filter:blur(12px);padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-logo{display:flex;align-items:center;gap:.5rem;color:#fff;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;cursor:pointer;background:none;border:none;font-family:inherit}
+.nav-links{display:flex;list-style:none;gap:1.8rem}
+.nav-links button{color:var(--c300);font-size:.88rem;font-weight:500;transition:color .2s;background:none;border:none;cursor:pointer;font-family:inherit}
+.nav-links button:hover{color:#fff}
+.nav-cta{background:var(--c500)!important;color:#fff!important;padding:.45rem 1.1rem!important;border-radius:100px!important;font-weight:600!important}
+.nav-cta:hover{background:var(--c400)!important}
+
+#scroller{position:fixed;top:68px;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden}
+
+/* HERO */
+#hero{min-height:calc(100vh - 68px);background:linear-gradient(135deg,rgba(13,43,26,.97) 0%,rgba(45,106,79,.92) 60%,rgba(13,43,26,.97) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem 5rem;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2352b788' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(82,183,136,.18);border:1px solid rgba(82,183,136,.35);color:var(--c300);padding:.4rem 1rem;border-radius:100px;font-size:.78rem;font-weight:600;margin-bottom:1.5rem;letter-spacing:.03em}
+.hero-title{font-size:clamp(2.8rem,7vw,4.8rem);font-weight:800;color:#fff;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.2rem}
+.hero-title .accent{color:var(--c400)}
+.hero-sub{color:var(--c200);font-size:1.05rem;max-width:520px;margin:0 auto 2.5rem;line-height:1.78}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:var(--c500);color:#fff;border:none;padding:.9rem 2rem;border-radius:100px;font-size:.95rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;transition:all .2s;box-shadow:0 4px 20px rgba(82,183,136,.35);font-family:inherit}
+.btn-primary:hover{background:var(--c400);transform:translateY(-2px)}
+.btn-sec{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.28);padding:.9rem 2rem;border-radius:100px;font-size:.95rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;transition:all .2s;font-family:inherit}
+.btn-sec:hover{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.07)}
+.hero-stats{display:flex;gap:3.5rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,.1)}
+.stat-n{font-size:2rem;font-weight:800;color:var(--c400)}
+.stat-l{font-size:.78rem;color:var(--c300);margin-top:.2rem}
+
+/* SHARED */
+section{padding:5rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.s-tag{display:inline-block;background:var(--c100);color:var(--c700);padding:.3rem .9rem;border-radius:100px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.8rem}
+.s-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;color:var(--c900);line-height:1.2;letter-spacing:-.02em;margin-bottom:.7rem}
+.s-sub{color:var(--g600);font-size:.97rem;max-width:480px;line-height:1.75}
+.btn-wa{background:#25D366;color:#fff;border:none;padding:.85rem 2rem;border-radius:100px;font-size:.93rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;transition:all .2s;box-shadow:0 4px 15px rgba(37,211,102,.3);font-family:inherit;margin-top:.4rem}
+.btn-wa:hover{background:#20bd5a;transform:translateY(-2px)}
+.wa-ico{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+
+/* TESTIMONIALS */
+#depoimentos{background:#fff}
+.dep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:.5rem}
+.dep-card{background:var(--c50);border:1.5px solid var(--c200);border-radius:var(--r);padding:1.8rem;position:relative;transition:all .3s;overflow:hidden}
+.dep-card:hover{border-color:var(--c400);box-shadow:var(--sh);transform:translateY(-3px)}
+.dep-card::after{content:'"';position:absolute;top:.3rem;right:1rem;font-size:5.5rem;color:var(--c200);line-height:1;font-family:Georgia,serif;pointer-events:none}
+.dep-stars{color:#f59e0b;font-size:1.15rem;letter-spacing:.05rem;margin-bottom:.9rem}
+.dep-text{color:var(--g600);font-size:.93rem;line-height:1.78;margin-bottom:1.3rem;position:relative;z-index:1}
+.dep-author{display:flex;align-items:center;gap:.8rem}
+.dep-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--c500),var(--c700));color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+.dep-name{font-size:.9rem;font-weight:700;color:var(--c800)}
+.dep-loc{font-size:.76rem;color:var(--g400);margin-top:.1rem}
+
+/* SERVICES */
+#servicos{background:var(--c50)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.4rem;margin-top:.5rem}
+.svc-card{background:#fff;border-radius:var(--r);padding:1.8rem;border:1.5px solid var(--g200);transition:all .3s;position:relative;overflow:hidden;cursor:pointer}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c500),var(--c400));opacity:0;transition:opacity .3s}
+.svc-card:hover{border-color:var(--c300);box-shadow:var(--sh);transform:translateY(-3px)}
+.svc-card:hover::before{opacity:1}
+.svc-ico{font-size:2.2rem;margin-bottom:.9rem}
+.svc-card h3{font-size:1.05rem;font-weight:700;color:var(--c800);margin-bottom:.4rem}
+.svc-card p{font-size:.85rem;color:var(--g600);line-height:1.6}
+.svc-wa{display:flex;align-items:center;gap:.4rem;margin-top:1rem;color:#25D366;font-size:.8rem;font-weight:600;padding-top:.75rem;border-top:1px solid var(--g200)}
+.plan-card{background:linear-gradient(135deg,var(--c700) 0%,var(--c800) 100%);border-radius:var(--r);padding:2.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.9rem;grid-column:1/-1;position:relative;overflow:hidden;border:none}
+.plan-card::after{content:'🌿';position:absolute;font-size:9rem;opacity:.07;right:-1.5rem;bottom:-2rem;pointer-events:none;line-height:1}
+.plan-badge{background:var(--c400);color:var(--c900);padding:.3rem .9rem;border-radius:100px;font-size:.73rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.plan-card h3{font-size:1.6rem;font-weight:800;color:#fff}
+.plan-card p{color:var(--c200);font-size:.93rem;max-width:480px;line-height:1.7}
+.svc-cta{text-align:center;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--g200)}
+.svc-cta p{color:var(--g600);font-size:.95rem;margin-bottom:1rem}
+
+/* CONDOMINIUMS */
+#condominio{background:var(--c900)}
+.condo-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.condo-list{list-style:none;margin-top:1.8rem;display:flex;flex-direction:column;gap:1.1rem}
+.condo-list li{display:flex;align-items:flex-start;gap:.9rem}
+.condo-ico{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.condo-list strong{display:block;font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.12rem}
+.condo-list p{font-size:.82rem;color:var(--c300);line-height:1.5;margin:0}
+.condo-panel{background:rgba(82,183,136,.07);border:1.5px solid rgba(82,183,136,.2);border-radius:20px;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.condo-stat{background:rgba(82,183,136,.1);border-radius:12px;padding:1.4rem 1rem;text-align:center}
+.condo-sn{font-size:2.1rem;font-weight:800;color:var(--c400)}
+.condo-sl{font-size:.76rem;color:var(--c300);margin-top:.25rem;line-height:1.4}
+
+/* BOOKING */
+#agendar{background:#fff}
+.booking-wrap{max-width:680px;margin:0 auto}
+.steps-ind{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem}
+.sdot{width:36px;height:36px;border-radius:50%;background:var(--g200);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--g400);flex-shrink:0;transition:all .3s}
+.sdot.active{background:var(--c500);color:#fff;box-shadow:0 0 0 4px rgba(82,183,136,.2)}
+.sdot.done{background:var(--c700);color:#fff}
+.sline{flex:1;height:2px;background:var(--g200);transition:background .3s;max-width:100px}
+.sline.done{background:var(--c700)}
+.bstep{display:none;animation:fiu .35s ease}
+.bstep.active{display:block}
+@keyframes fiu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.st-title{font-size:1.35rem;font-weight:700;color:var(--c800);margin-bottom:.3rem}
+.st-desc{color:var(--g600);font-size:.88rem;margin-bottom:1.8rem}
+.svc-opts{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.svc-opt{border:2px solid var(--g200);border-radius:var(--r);padding:1.15rem;cursor:pointer;display:flex;align-items:flex-start;gap:.8rem;background:#fff;transition:all .2s;width:100%;text-align:left;font-family:inherit}
+.svc-opt:hover{border-color:var(--c400);background:var(--c50)}
+.svc-opt.sel{border-color:var(--c500);background:var(--c50);box-shadow:0 0 0 3px rgba(82,183,136,.15)}
+.svc-opt .ico{font-size:1.7rem;flex-shrink:0}
+.svc-opt h4{font-size:.88rem;font-weight:600;color:var(--c800);margin-bottom:.15rem}
+.svc-opt p{font-size:.77rem;color:var(--g600);line-height:1.4}
+.cal-wrap{background:var(--c50);border-radius:var(--r);padding:1.4rem;border:1.5px solid var(--g200)}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.cal-head h4{font-size:.95rem;font-weight:700;color:var(--c800);text-transform:capitalize}
+.cnav{background:none;border:1.5px solid var(--g200);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--c700);font-size:1rem;transition:all .2s}
+.cnav:hover{background:var(--c100);border-color:var(--c300)}
+.cal-wk{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px}
+.wday{text-align:center;font-size:.7rem;font-weight:700;color:var(--g400);text-transform:uppercase;padding:3px 0}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cday{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:.82rem;font-weight:500;cursor:pointer;border:none;background:none;color:var(--g800);transition:all .2s;font-family:inherit}
+.cday:hover:not(.dis):not(.emp){background:var(--c200);color:var(--c800)}
+.cday.sel{background:var(--c500);color:#fff;font-weight:700}
+.cday.tod{background:var(--c100);color:var(--c700);font-weight:700}
+.cday.tod.sel{background:var(--c500);color:#fff}
+.cday.dis{color:var(--g200);cursor:not-allowed}
+.cday.emp{cursor:default}
+.tslots{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:.7rem}
+.tslot{border:2px solid var(--g200);border-radius:9px;padding:.6rem;text-align:center;cursor:pointer;font-size:.87rem;font-weight:500;color:var(--g800);transition:all .2s;background:#fff;font-family:inherit}
+.tslot:hover:not(.unav){border-color:var(--c400);background:var(--c50);color:var(--c700)}
+.tslot.sel{border-color:var(--c500);background:var(--c500);color:#fff}
+.tslot.unav{opacity:.38;cursor:not-allowed;background:var(--g200)}
+.tslot.booked{opacity:.65;cursor:not-allowed;background:var(--c100);border-color:var(--c300);color:var(--c700)}
+.tslot small{display:block;font-size:.63rem;margin-top:2px;opacity:.85}
+.fg{margin-bottom:1.1rem}
+.fg label{display:block;font-size:.83rem;font-weight:600;color:var(--c800);margin-bottom:.35rem}
+.fg input,.fg textarea{width:100%;padding:.72rem 1rem;border:1.5px solid var(--g200);border-radius:9px;font-size:.93rem;font-family:inherit;color:var(--g800);background:var(--c50);transition:border-color .2s,box-shadow .2s;outline:none;resize:none}
+.fg input:focus,.fg textarea:focus{border-color:var(--c400);box-shadow:0 0 0 3px rgba(82,183,136,.1);background:#fff}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.snav{display:flex;justify-content:space-between;align-items:center;margin-top:1.8rem;gap:1rem}
+.btn-back{background:none;border:1.5px solid var(--g200);color:var(--g600);padding:.7rem 1.4rem;border-radius:100px;font-size:.88rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .2s;font-family:inherit}
+.btn-back:hover{border-color:var(--c300);color:var(--c700)}
+.btn-next{background:var(--c500);color:#fff;border:none;padding:.7rem 1.8rem;border-radius:100px;font-size:.88rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .2s;margin-left:auto;font-family:inherit}
+.btn-next:hover{background:var(--c400);transform:translateY(-1px)}
+.btn-next:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.conf-card{background:var(--c50);border:1.5px solid var(--c200);border-radius:var(--r);padding:1.4rem;margin-bottom:1.4rem}
+.conf-card h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c600);margin-bottom:.9rem}
+.conf-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--c100);font-size:.88rem}
+.conf-row:last-child{border-bottom:none}
+.conf-row .lbl{color:var(--g600)}
+.conf-row .val{font-weight:600;color:var(--c800)}
+.success-v{text-align:center;padding:2rem 1rem}
+.success-ico{font-size:4rem;margin-bottom:1rem}
+.success-v h3{font-size:1.7rem;font-weight:800;color:var(--c700);margin-bottom:.5rem}
+.success-v p{color:var(--g600);margin-bottom:1.5rem;font-size:.95rem}
+
+/* ABOUT */
+#sobre{background:var(--c50)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-vis{background:var(--c50);border-radius:20px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1.8rem}
+.feat{display:flex;align-items:flex-start;gap:.6rem}
+.feat .fi{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.feat h4{font-size:.82rem;font-weight:600;color:var(--c800);margin-bottom:.15rem}
+.feat p{font-size:.77rem;color:var(--g600);line-height:1.4}
+
+/* CONTACT */
+#contato{background:var(--c800)}
+#contato .s-tag{background:rgba(82,183,136,.18);color:var(--c300)}
+#contato .s-title{color:#fff}
+#contato .s-sub{color:var(--c300)}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.ct-items{display:flex;flex-direction:column;gap:1.4rem;margin-top:2rem}
+.ct-item{display:flex;align-items:flex-start;gap:.9rem}
+.ct-ico{width:42px;height:42px;background:rgba(82,183,136,.13);border:1px solid rgba(82,183,136,.22);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ct-item h4{font-size:.76rem;font-weight:600;color:var(--c300);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.15rem}
+.ct-item p,.ct-item a{color:var(--c100);font-size:.93rem;text-decoration:none;transition:color .2s}
+.ct-item a:hover{color:var(--c400)}
+.ct-wa-box{background:rgba(37,211,102,.09);border:1.5px solid rgba(37,211,102,.25);border-radius:var(--r);padding:1.8rem}
+.ct-wa-box h3{font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.ct-wa-box p{color:var(--c200);font-size:.88rem;margin-bottom:1.2rem;line-height:1.65}
+
+footer{background:var(--c900);color:var(--c400);text-align:center;padding:1.5rem 2rem;font-size:.83rem}
+footer b{color:var(--c400)}
+.mobile-nav{display:none}
+
+/* FLOATING WA */
+.wa-float{position:fixed;bottom:90px;right:1.5rem;z-index:996;width:60px;height:60px;background:#25D366;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);animation:waPulse 2.5s ease infinite;transition:transform .2s}
+.wa-float:hover{transform:scale(1.1);animation:none;box-shadow:0 6px 28px rgba(37,211,102,.6)}
+.wa-float svg{width:32px;height:32px;fill:#fff}
+.wa-float-label{position:absolute;right:68px;background:rgba(13,43,26,.93);color:#fff;font-size:.76rem;font-weight:600;white-space:nowrap;padding:.38rem .9rem;border-radius:20px;pointer-events:none;opacity:0;transform:translateX(6px);transition:all .25s}
+.wa-float:hover .wa-float-label{opacity:1;transform:translateX(0)}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45),0 0 0 0 rgba(37,211,102,.25)}70%{box-shadow:0 4px 20px rgba(37,211,102,.45),0 0 0 14px rgba(37,211,102,0)}}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none}
+  #scroller{bottom:65px}
+  #hero{padding:3rem 1.5rem;min-height:calc(100vh - 133px)}
+  .hero-title{font-size:clamp(2.8rem,9vw,3.8rem)}
+  .hero-sub{font-size:1.15rem}
+  .hero-btns{flex-direction:column;align-items:center}
+  .hero-btns .btn-primary,.hero-btns .btn-sec{width:100%;max-width:300px;justify-content:center;padding:1.1rem;font-size:1.1rem}
+  .hero-stats{gap:0;justify-content:space-around}
+  .stat-n{font-size:1.9rem}
+  .stat-l{font-size:.82rem}
+  section{padding:3rem 1.2rem}
+  .s-title{font-size:1.9rem}
+  .s-sub{font-size:1rem;max-width:100%}
+  .dep-grid{grid-template-columns:1fr}
+  .svc-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:1rem;grid-template-columns:unset;margin:0 -1.2rem;padding:0 1.2rem 1rem;scrollbar-width:none}
+  .svc-grid::-webkit-scrollbar{display:none}
+  .svc-card{min-width:230px;max-width:230px;scroll-snap-align:start;flex-shrink:0}
+  .plan-card{min-width:290px;max-width:85vw;grid-column:unset;flex-shrink:0;scroll-snap-align:start}
+  .condo-grid{grid-template-columns:1fr}
+  .condo-panel{grid-template-columns:1fr 1fr}
+  .booking-wrap{max-width:100%}
+  .sdot{width:32px;height:32px;font-size:.75rem}
+  .sline{max-width:55px}
+  .st-title{font-size:1.45rem}
+  .svc-opts{grid-template-columns:1fr 1fr}
+  .svc-opt{padding:.9rem;gap:.6rem}
+  .svc-opt .ico{font-size:1.5rem}
+  .tslots{grid-template-columns:repeat(3,1fr)}
+  .tslot{padding:.85rem .3rem;font-size:.95rem}
+  .frow{grid-template-columns:1fr}
+  .fg input,.fg textarea{font-size:1rem;padding:.85rem 1rem}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .about-vis{max-height:200px}
+  .ct-grid{grid-template-columns:1fr;gap:2rem}
+  .wa-float{bottom:82px;right:1rem;width:52px;height:52px}
+  .wa-float svg{width:26px;height:26px}
+  .wa-float-label{display:none}
+  .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(13,43,26,.97);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.12);padding:.5rem 0 calc(.5rem + env(safe-area-inset-bottom, 0px))}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:.13rem;background:none;border:none;color:var(--c300);font-family:inherit;font-size:.55rem;font-weight:500;cursor:pointer;padding:.4rem .04rem;transition:all .2s;-webkit-tap-highlight-color:transparent}
+  .mob-tab.active{color:#fff}
+  .mob-ico{font-size:1.18rem;transition:transform .2s;display:block;line-height:1}
+  .mob-tab.active .mob-ico{transform:scale(1.12)}
+}
+@media(max-width:480px){
+  .hero-title{font-size:clamp(2.5rem,11vw,3.2rem)}
+  .svc-card{min-width:210px;max-width:210px}
+  .stat-n{font-size:1.8rem}
+  .plan-card{min-width:260px}
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <button class="nav-logo" onclick="goto('hero')">
+    <svg width="42" height="42" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="100" cy="100" r="99" fill="#2d4a2e"/><circle cx="100" cy="100" r="93" fill="#edeade"/><path d="M 92,87 Q 98,66 105,45" stroke="#2d4a2e" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 92,86 C 80,85 67,77 69,64 C 80,67 90,78 92,86 Z" fill="#2d4a2e"/><path d="M 97,67 C 83,63 73,50 78,39 C 89,44 96,58 97,67 Z" fill="#2d4a2e"/><path d="M 103,50 C 113,35 129,29 133,40 C 122,47 111,51 103,50 Z" fill="#2d4a2e"/><text x="100" y="147" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="29" fill="#2d4a2e">echo</text><line x1="54" y1="158" x2="67" y2="158" stroke="#2d4a2e" stroke-width="1.5"/><line x1="133" y1="158" x2="146" y2="158" stroke="#2d4a2e" stroke-width="1.5"/><text x="100" y="162" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#2d4a2e" textLength="72" lengthAdjust="spacing">JARDINAGEM</text></svg>
+    Echo Jardinagem
+  </button>
+  <ul class="nav-links">
+    <li><button onclick="goto('servicos')">Serviços</button></li>
+    <li><button onclick="goto('sobre')">Sobre</button></li>
+    <li><button onclick="goto('contato')">Contato</button></li>
+    <li><button onclick="goto('agendar')" class="nav-cta">Agendar</button></li>
+  </ul>
+</nav>
+
+<div id="scroller">
+
+<!-- HERO -->
+<section id="hero">
+  <div>
+    <div class="hero-badge">⭐ Referência em Jardinagem em Guarapuava</div>
+    <h1 class="hero-title">Jardinagem Profissional<br><span class="accent">em Guarapuava</span></h1>
+    <p class="hero-sub">Corte de grama, poda de árvores, manutenção de jardins e atendimento rápido. Solicite seu orçamento sem compromisso e transforme seu espaço verde.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openWA('orcamento')">💬 Solicitar Orçamento Grátis</button>
+      <button class="btn-sec" onclick="goto('servicos')">Ver Serviços →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">200+</div><div class="stat-l">Clientes Satisfeitos</div></div>
+      <div class="stat"><div class="stat-n">5 ★</div><div class="stat-l">Avaliação Média</div></div>
+      <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Anos de Experiência</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="container">
+    <div style="margin-bottom:2.8rem">
+      <span class="s-tag">Depoimentos</span>
+      <h2 class="s-title">O que nossos clientes dizem</h2>
+      <p class="s-sub">Mais de 200 clientes satisfeitos em Guarapuava. Veja o que eles falam sobre nosso trabalho.</p>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"O serviço de corte de grama da Echo é impecável! Sempre pontuais, o resultado é excelente e o preço é justo. Meu jardim nunca esteve tão bonito. Recomendo a todos de Guarapuava!"</p>
+        <div class="dep-author"><div class="dep-av">MF</div><div><div class="dep-name">Marcos Ferreira</div><div class="dep-loc">📍 Guarapuava, PR</div></div></div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Contratei para poda de árvores e fiquei impressionada com o profissionalismo. Equipe educada, limparam tudo depois e o atendimento foi rápido. Com certeza vou usar novamente!"</p>
+        <div class="dep-author"><div class="dep-av">AS</div><div><div class="dep-name">Ana Santos</div><div class="dep-loc">📍 Guarapuava, PR</div></div></div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Instalaram o sistema de irrigação inteligente e está funcionando perfeitamente. Economizei muito na conta de água e meu jardim sempre está hidratado. Atendimento excelente!"</p>
+        <div class="dep-author"><div class="dep-av">RL</div><div><div class="dep-name">Roberto Lima</div><div class="dep-loc">📍 Guarapuava, PR</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="container">
+    <div style="margin-bottom:2.8rem">
+      <span class="s-tag">Nossos Serviços</span>
+      <h2 class="s-title">O que oferecemos</h2>
+      <p class="s-sub">Serviços completos de jardinagem em Guarapuava. Clique em qualquer serviço para solicitar orçamento.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card" onclick="openWA('corte')"><div class="svc-ico">✂️</div><h3>Corte de Grama</h3><p>Corte preciso e uniforme para gramados sempre bonitos. Atendemos residências e comércios em Guarapuava.</p><div class="svc-wa">💬 Solicitar orçamento</div></div>
+      <div class="svc-card" onclick="openWA('poda')"><div class="svc-ico">🌳</div><h3>Poda de Árvore</h3><p>Poda profissional para garantir saúde, forma e segurança das suas árvores com equipe especializada.</p><div class="svc-wa">💬 Solicitar orçamento</div></div>
+      <div class="svc-card" onclick="openWA('irrigacao')"><div class="svc-ico">💧</div><h3>Irrigação Inteligente</h3><p>Instalação de sistemas automatizados de irrigação em Guarapuava. Economia de água e jardim sempre hidratado.</p><div class="svc-wa">💬 Solicitar orçamento</div></div>
+      <div class="svc-card" onclick="openWA('iluminacao')"><div class="svc-ico">💡</div><h3>Iluminação de Jardim</h3><p>Transforme seu jardim à noite com sistemas de iluminação modernos e elegantes instalados por profissionais.</p><div class="svc-wa">💬 Solicitar orçamento</div></div>
+      <div class="plan-card">
+        <div class="plan-badge">⭐ Mais Vantajoso</div>
+        <h3>Plano Mensal</h3>
+        <p>Tenha seu jardim sempre impecável com nosso plano de manutenção mensal. Serviços regulares, preço especial e prioridade no atendimento. Monte o plano ideal para o seu espaço.</p>
+        <button class="btn-wa" onclick="openWA('plano')">
+          <svg class="wa-ico" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Solicitar Orçamento pelo WhatsApp
+        </button>
+      </div>
+    </div>
+    <div class="svc-cta">
+      <p>Não tem certeza qual serviço precisa? Fale com a gente e te ajudamos a encontrar a melhor solução.</p>
+      <button class="btn-primary" onclick="openWA('orcamento')">💬 Falar com Especialista</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONDOMÍNIOS -->
+<section id="condominio">
+  <div class="container">
+    <div class="condo-grid">
+      <div>
+        <span class="s-tag" style="background:rgba(82,183,136,.18);color:var(--c300)">🏢 Para Condomínios</span>
+        <h2 class="s-title" style="color:#fff">Atendimento Especializado para Condomínios</h2>
+        <p class="s-sub" style="color:var(--c200)">Soluções completas em jardinagem e manutenção de áreas externas para condomínios residenciais e comerciais em Guarapuava. Proposta personalizada para o seu espaço.</p>
+        <ul class="condo-list">
+          <li><span class="condo-ico">✅</span><div><strong>Manutenção Periódica</strong><p>Visitas programadas com frequência definida pelo condomínio, garantindo áreas sempre impecáveis</p></div></li>
+          <li><span class="condo-ico">✅</span><div><strong>Corte de Grama</strong><p>Gramados uniformes e bem cuidados em todas as áreas comuns do condomínio</p></div></li>
+          <li><span class="condo-ico">✅</span><div><strong>Poda Preventiva</strong><p>Árvores e arbustos podados com segurança por equipe técnica especializada</p></div></li>
+          <li><span class="condo-ico">✅</span><div><strong>Conservação de Áreas Comuns</strong><p>Jardins, canteiros e áreas de lazer sempre apresentáveis para moradores e visitantes</p></div></li>
+          <li><span class="condo-ico">✅</span><div><strong>Atendimento Programado</strong><p>Cronograma mensal personalizado com relatório detalhado dos serviços realizados</p></div></li>
+        </ul>
+        <button class="btn-wa" style="margin-top:1.8rem" onclick="openWA('condominio')">
+          <svg class="wa-ico" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Solicitar Proposta para Condomínio
+        </button>
+      </div>
+      <div class="condo-panel">
+        <div class="condo-stat"><div class="condo-sn">50+</div><div class="condo-sl">Condomínios Atendidos</div></div>
+        <div class="condo-stat"><div class="condo-sn">100%</div><div class="condo-sl">Satisfação Garantida</div></div>
+        <div class="condo-stat"><div class="condo-sn">📋</div><div class="condo-sl">Contrato Personalizado</div></div>
+        <div class="condo-stat"><div class="condo-sn">⚡</div><div class="condo-sl">Suporte Prioritário</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDAMENTO -->
+<section id="agendar">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2.8rem">
+      <span class="s-tag">Agendamento Online</span>
+      <h2 class="s-title">Agende seu serviço agora</h2>
+      <p class="s-sub" style="margin:0 auto">Simples e rápido. Escolha o serviço, a data e o horário que preferir — sem sair de casa.</p>
+    </div>
+    <div class="booking-wrap">
+      <div class="steps-ind">
+        <div class="sdot active" id="d1">1</div><div class="sline" id="l1"></div>
+        <div class="sdot" id="d2">2</div><div class="sline" id="l2"></div>
+        <div class="sdot" id="d3">3</div><div class="sline" id="l3"></div>
+        <div class="sdot" id="d4">4</div>
+      </div>
+      <div class="bstep active" id="s1">
+        <h3 class="st-title">Escolha o serviço</h3>
+        <p class="st-desc">Selecione qual serviço de jardinagem deseja agendar em Guarapuava.</p>
+        <div class="svc-opts">
+          <button class="svc-opt" data-svc="Corte de Grama" onclick="selSvc(this)"><span class="ico">✂️</span><div><h4>Corte de Grama</h4><p>Corte preciso do gramado</p></div></button>
+          <button class="svc-opt" data-svc="Poda de Árvore" onclick="selSvc(this)"><span class="ico">🌳</span><div><h4>Poda de Árvore</h4><p>Poda profissional de árvores</p></div></button>
+          <button class="svc-opt" data-svc="Irrigação Inteligente" onclick="selSvc(this)"><span class="ico">💧</span><div><h4>Irrigação Inteligente</h4><p>Sistema automatizado</p></div></button>
+          <button class="svc-opt" data-svc="Iluminação de Jardim" onclick="selSvc(this)"><span class="ico">💡</span><div><h4>Iluminação de Jardim</h4><p>Iluminação moderna</p></div></button>
+        </div>
+        <div class="snav"><button class="btn-next" id="b1" onclick="go(2)" disabled>Próximo →</button></div>
+      </div>
+      <div class="bstep" id="s2">
+        <h3 class="st-title">Escolha a data</h3>
+        <p class="st-desc">Selecione o melhor dia para receber nossa equipe.</p>
+        <div class="cal-wrap" id="cal"></div>
+        <div class="snav"><button class="btn-back" onclick="go(1)">← Voltar</button><button class="btn-next" id="b2" onclick="go(3)" disabled>Próximo →</button></div>
+      </div>
+      <div class="bstep" id="s3">
+        <h3 class="st-title">Escolha o horário</h3>
+        <p class="st-desc">Selecione um horário disponível para o atendimento.</p>
+        <div class="tslots" id="tslots"></div>
+        <div class="snav"><button class="btn-back" onclick="go(2)">← Voltar</button><button class="btn-next" id="b3" onclick="go(4)" disabled>Próximo →</button></div>
+      </div>
+      <div class="bstep" id="s4">
+        <h3 class="st-title">Seus dados</h3>
+        <p class="st-desc">Preencha para confirmar o agendamento. Nossa equipe entrará em contato.</p>
+        <div class="frow">
+          <div class="fg"><label>Nome completo *</label><input id="f-nome" type="text" placeholder="Seu nome" oninput="valF()"></div>
+          <div class="fg"><label>WhatsApp *</label><input id="f-tel" type="tel" placeholder="(42) 99999-9999" oninput="valF()"></div>
+        </div>
+        <div class="fg"><label>Endereço em Guarapuava *</label><input id="f-end" type="text" placeholder="Rua, número, bairro" oninput="valF()"></div>
+        <div class="fg"><label>Observações</label><textarea id="f-obs" rows="2" placeholder="Detalhes adicionais sobre o serviço..."></textarea></div>
+        <div class="conf-card">
+          <h4>Resumo do Agendamento</h4>
+          <div class="conf-row"><span class="lbl">Serviço</span><span class="val" id="rs">—</span></div>
+          <div class="conf-row"><span class="lbl">Data</span><span class="val" id="rd">—</span></div>
+          <div class="conf-row"><span class="lbl">Horário</span><span class="val" id="rt">—</span></div>
+        </div>
+        <div class="snav"><button class="btn-back" onclick="go(3)">← Voltar</button><button class="btn-next" id="b4" onclick="confirm_booking()" disabled>✅ Confirmar Agendamento</button></div>
+      </div>
+      <div class="bstep" id="sOk">
+        <div class="success-v">
+          <div class="success-ico">🎉</div>
+          <h3>Agendamento Confirmado!</h3>
+          <p>Perfeito! Seu agendamento foi realizado. Nossa equipe entrará em contato pelo WhatsApp para confirmar todos os detalhes.</p>
+          <div class="conf-card" style="text-align:left;max-width:420px;margin:1rem auto">
+            <h4>Detalhes</h4>
+            <div class="conf-row"><span class="lbl">Serviço</span><span class="val" id="fs">—</span></div>
+            <div class="conf-row"><span class="lbl">Data</span><span class="val" id="fd">—</span></div>
+            <div class="conf-row"><span class="lbl">Horário</span><span class="val" id="fh">—</span></div>
+            <div class="conf-row"><span class="lbl">Nome</span><span class="val" id="fn">—</span></div>
+          </div>
+          <button class="btn-primary" onclick="reset_booking()" style="margin:0 auto">+ Novo Agendamento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-vis"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:78%;max-width:230px"><circle cx="100" cy="100" r="99" fill="#2d4a2e"/><circle cx="100" cy="100" r="93" fill="#edeade"/><path d="M 92,87 Q 98,66 105,45" stroke="#2d4a2e" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 92,86 C 80,85 67,77 69,64 C 80,67 90,78 92,86 Z" fill="#2d4a2e"/><path d="M 97,67 C 83,63 73,50 78,39 C 89,44 96,58 97,67 Z" fill="#2d4a2e"/><path d="M 103,50 C 113,35 129,29 133,40 C 122,47 111,51 103,50 Z" fill="#2d4a2e"/><text x="100" y="147" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="29" fill="#2d4a2e">echo</text><line x1="54" y1="158" x2="67" y2="158" stroke="#2d4a2e" stroke-width="1.5"/><line x1="133" y1="158" x2="146" y2="158" stroke="#2d4a2e" stroke-width="1.5"/><text x="100" y="162" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8" fill="#2d4a2e" textLength="72" lengthAdjust="spacing">JARDINAGEM</text></svg></div>
+      <div>
+        <span class="s-tag">Por que a Echo?</span>
+        <h2 class="s-title">Jardinagem profissional com quem você pode confiar</h2>
+        <p class="s-sub">Somos especializados em transformar e manter espaços verdes em Guarapuava com qualidade, dedicação e pontualidade que nossos clientes aprovam.</p>
+        <div class="feat-grid">
+          <div class="feat"><div class="fi">⏱️</div><div><h4>Pontualidade</h4><p>Respeitamos seu tempo e horário agendado.</p></div></div>
+          <div class="feat"><div class="fi">🛡️</div><div><h4>Profissionalismo</h4><p>Equipe treinada e equipamentos de qualidade.</p></div></div>
+          <div class="feat"><div class="fi">🌱</div><div><h4>Sustentabilidade</h4><p>Práticas ecológicas e conscientes.</p></div></div>
+          <div class="feat"><div class="fi">💬</div><div><h4>Suporte Ágil</h4><p>Atendimento rápido pelo WhatsApp.</p></div></div>
+        </div>
+        <button class="btn-primary" style="margin-top:1.8rem" onclick="openWA('orcamento')">💬 Solicitar Orçamento Grátis</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="ct-grid">
+      <div>
+        <span class="s-tag">Contato</span>
+        <h2 class="s-title">Fale Conosco</h2>
+        <p class="s-sub">Atendemos em Guarapuava e região. Entre em contato e solicite seu orçamento agora mesmo.</p>
+        <div class="ct-items">
+          <div class="ct-item"><div class="ct-ico">📍</div><div><h4>Localização</h4><p>Guarapuava, Paraná</p></div></div>
+          <div class="ct-item"><div class="ct-ico">📞</div><div><h4>Telefone / WhatsApp</h4><p>(42) 98840-8840</p></div></div>
+          <div class="ct-item"><div class="ct-ico">⏰</div><div><h4>Horário de Atendimento</h4><p>Segunda a Sábado · 8h às 20h</p></div></div>
+        </div>
+      </div>
+      <div class="ct-wa-box">
+        <h3>💬 Orçamento Rápido pelo WhatsApp</h3>
+        <p>Envie uma mensagem agora e receba seu orçamento em minutos. Atendimento ágil e sem compromisso para serviços de jardinagem em Guarapuava.</p>
+        <button class="btn-wa" onclick="openWA('orcamento')">
+          <svg class="wa-ico" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Solicitar Orçamento Agora
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 <b>Echo Jardinagem</b> · Guarapuava, Paraná · Jardinagem Profissional em Guarapuava 🌿</footer>
+
+</div><!-- /scroller -->
+
+<!-- MODAL INSTALAR APP -->
+<div id="imod" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:1.5rem" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:20px;padding:1.8rem;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
+      <h3 style="font-size:1.05rem;font-weight:800;color:#1a4a2e">📲 Instalar Echo Jardinagem</h3>
+      <button onclick="document.getElementById('imod').style.display='none'" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#aaa;line-height:1">✕</button>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-bottom:1.2rem">
+      <button id="tb-a" onclick="iTab('a')" style="flex:1;padding:.6rem;border-radius:10px;border:2px solid #52b788;background:#f0faf3;cursor:pointer;font-weight:600;font-size:.85rem;font-family:inherit;color:#2d6a4f">🤖 Android</button>
+      <button id="tb-i" onclick="iTab('i')" style="flex:1;padding:.6rem;border-radius:10px;border:2px solid #e2ebe4;background:#fff;cursor:pointer;font-weight:600;font-size:.85rem;font-family:inherit;color:#8a9a8f">🍎 iPhone</button>
+    </div>
+    <div id="pn-a">
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid #e2ebe4;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">1</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Abra no Google Chrome</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">Use o Chrome no seu Android</p></div></div>
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid #e2ebe4;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">2</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Toque nos 3 pontos ⋮</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">Canto superior direito do Chrome</p></div></div>
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid #e2ebe4;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">3</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Toque em "Instalar app"</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">Ou "Adicionar à tela inicial"</p></div></div>
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#52b788;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">✓</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Pronto!</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">App Echo Jardinagem instalado na tela inicial 🌿</p></div></div>
+    </div>
+    <div id="pn-i" style="display:none">
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid #e2ebe4;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">1</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Abra no Safari</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">Use o Safari no iPhone ou iPad</p></div></div>
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid #e2ebe4;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">2</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Toque em Compartilhar ⬆️</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">Ícone na barra inferior do Safari</p></div></div>
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;border-bottom:1px solid #e2ebe4;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#1a4a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">3</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">"Adicionar à Tela de Início"</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">Role a lista para encontrar esta opção</p></div></div>
+      <div style="display:flex;gap:.85rem;padding:.8rem 0;align-items:flex-start"><div style="min-width:28px;height:28px;border-radius:50%;background:#52b788;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0">✓</div><div><b style="display:block;color:#1a4a2e;font-size:.9rem;margin-bottom:.1rem">Pronto!</b><p style="color:#4a5a50;font-size:.83rem;line-height:1.5;margin:0">App Echo Jardinagem instalado na tela inicial 🌿</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav">
+  <button class="mob-tab active" onclick="goto('hero');setTab(this)"><span class="mob-ico">🏠</span><span>Início</span></button>
+  <button class="mob-tab" onclick="goto('servicos');setTab(this)"><span class="mob-ico">🌿</span><span>Serviços</span></button>
+  <button class="mob-tab" onclick="goto('agendar');setTab(this)"><span class="mob-ico">📅</span><span>Agendar</span></button>
+  <button class="mob-tab" onclick="goto('sobre');setTab(this)"><span class="mob-ico">⭐</span><span>Sobre</span></button>
+  <button class="mob-tab" onclick="goto('contato');setTab(this)"><span class="mob-ico">📞</span><span>Contato</span></button>
+</nav>
+
+<!-- FLOATING WA BUTTON -->
+<button class="wa-float" onclick="openWA('orcamento')">
+  <span class="wa-float-label">Solicitar Orçamento</span>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</button>
+
+<script>
+const EJS_KEY="lqI0oJGFLIs8N6eq_",EJS_SVC="service_u2qllop",EJS_TPL="template_4fdj8fo";
+const PHONE="5542988408840";
+const MSGS={
+  orcamento:encodeURIComponent("Olá, Echo Jardinagem! 🌿\n\nGostaria de solicitar um *orçamento gratuito e sem compromisso* para serviços de jardinagem em Guarapuava.\n\nPode me ajudar?"),
+  plano:encodeURIComponent("Olá, Echo Jardinagem! 🌿\n\nTenho interesse no *Plano Mensal* de jardinagem e gostaria de solicitar um orçamento.\n\nPoderia me informar as opções de planos disponíveis, os serviços incluídos e os valores? Obrigado(a)!"),
+  corte:encodeURIComponent("Olá, Echo Jardinagem! ✂️\n\nGostaria de solicitar um orçamento para o serviço de *Corte de Grama* em Guarapuava.\n\nPoderia me informar os valores e disponibilidade de horários? Obrigado(a)!"),
+  poda:encodeURIComponent("Olá, Echo Jardinagem! 🌳\n\nGostaria de solicitar um orçamento para *Poda de Árvore* em Guarapuava.\n\nPoderia me informar os tipos de poda, valores e disponibilidade? Obrigado(a)!"),
+  irrigacao:encodeURIComponent("Olá, Echo Jardinagem! 💧\n\nGostaria de solicitar um orçamento para *Instalação de Sistema de Irrigação Inteligente* em Guarapuava.\n\nPoderia me informar as opções e valores? Obrigado(a)!"),
+  iluminacao:encodeURIComponent("Olá, Echo Jardinagem! 💡\n\nGostaria de solicitar um orçamento para *Instalação de Iluminação de Jardim* em Guarapuava.\n\nPoderia me informar as opções e valores? Obrigado(a)!"),
+  condominio:encodeURIComponent("Olá, Echo Jardinagem! 🏢\n\nRepresento um *condomínio em Guarapuava* e gostaria de solicitar uma proposta para serviços de jardinagem e manutenção de áreas comuns.\n\nPodemos conversar sobre opções e valores?"),
+  contato:encodeURIComponent("Olá, Echo Jardinagem! 🌿 Gostaria de mais informações sobre os serviços de jardinagem em Guarapuava.")
+};
+
+function openWA(k){window.open(`https://wa.me/${PHONE}?text=${MSGS[k]}`,"_blank");}
+function sendEmail(p){return fetch("https://api.emailjs.com/api/v1.0/email/send",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({service_id:EJS_SVC,template_id:EJS_TPL,user_id:EJS_KEY,template_params:p})});}
+
+function goto(id){
+  const el=document.getElementById(id),s=document.getElementById('scroller');
+  if(el&&s) s.scrollTo({top:el.offsetTop,behavior:'smooth'});
+}
+function setTab(el){document.querySelectorAll('.mob-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+
+const ST={svc:null,date:null,time:null,m:new Date().getMonth(),y:new Date().getFullYear()};
+const MN=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const DW=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const SLOTS=["08:00","09:00","10:00","11:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00"];
+const UNAV=[];
+
+function go(n){
+  document.querySelectorAll(".bstep").forEach(e=>e.classList.remove("active"));
+  document.getElementById("s"+(n==="Ok"?"Ok":n)).classList.add("active");
+  if(typeof n==="number"){
+    for(let i=1;i<=4;i++){const d=document.getElementById("d"+i);d.classList.remove("active","done");if(i<n){d.classList.add("done");d.innerHTML="✓";}else if(i===n){d.classList.add("active");d.innerHTML=i;}else d.innerHTML=i;}
+    for(let i=1;i<=3;i++) document.getElementById("l"+i).classList.toggle("done",i<n);
+    if(n===3) renderSlots();
+    if(n===4) updateSum();
+  }
+  const s=document.getElementById('scroller'),el=document.getElementById("agendar");
+  if(s&&el) s.scrollTo({top:el.offsetTop,behavior:'smooth'});
+}
+
+function selSvc(el){document.querySelectorAll(".svc-opt").forEach(o=>o.classList.remove("sel"));el.classList.add("sel");ST.svc=el.dataset.svc;document.getElementById("b1").disabled=false;}
+
+function renderCal(){
+  const td=new Date(),fd=new Date(ST.y,ST.m,1).getDay(),dim=new Date(ST.y,ST.m+1,0).getDate(),sel=ST.date;
+  let h=`<div class="cal-head"><button class="cnav" onclick="chM(-1)">‹</button><h4>${MN[ST.m]} ${ST.y}</h4><button class="cnav" onclick="chM(1)">›</button></div>`;
+  h+=`<div class="cal-wk">${DW.map(d=>`<div class="wday">${d}</div>`).join("")}</div><div class="cal-days">`;
+  for(let i=0;i<fd;i++) h+=`<div class="cday emp"></div>`;
+  for(let d=1;d<=dim;d++){
+    const dt=new Date(ST.y,ST.m,d),isTd=dt.toDateString()===td.toDateString(),isPast=dt<new Date(td.getFullYear(),td.getMonth(),td.getDate()),isSun=dt.getDay()===0,isSel=sel&&sel.getDate()===d&&sel.getMonth()===ST.m&&sel.getFullYear()===ST.y,dis=isPast||isSun;
+    h+=`<button class="cday${isTd?" tod":""}${isSel?" sel":""}${dis?" dis":""}"${dis?' disabled':`onclick="selD(${d},${ST.m},${ST.y})"`}>${d}</button>`;
+  }
+  document.getElementById("cal").innerHTML=h+`</div>`;
+}
+
+function chM(d){ST.m+=d;if(ST.m>11){ST.m=0;ST.y++;}if(ST.m<0){ST.m=11;ST.y--;}renderCal();}
+function selD(d,m,y){ST.date=new Date(y,m,d);document.getElementById("b2").disabled=false;renderCal();}
+
+async function renderSlots(){
+  const ds=ST.date?ST.date.toISOString().split('T')[0]:'';
+  let bk=[];
+  if(ds&&window.storage){try{const r=await window.storage.list(`booked:${ds}:`);if(r&&r.keys)bk=r.keys.map(k=>k.replace(`booked:${ds}:`,''));}catch(e){}}
+  document.getElementById("tslots").innerHTML=SLOTS.map(t=>{
+    const u=UNAV.includes(t),b=bk.includes(t),s=ST.time===t,dis=u||b;
+    return`<button class="tslot${u?' unav':''}${b?' booked':''}${s?' sel':''}"${dis?' disabled':`onclick="selT('${t}',this)"`}>${t}${b?'<br><small>Ocupado</small>':''}</button>`;
+  }).join("");
+}
+
+function selT(t,el){document.querySelectorAll(".tslot").forEach(s=>s.classList.remove("sel"));el.classList.add("sel");ST.time=t;document.getElementById("b3").disabled=false;}
+function valF(){const n=document.getElementById("f-nome").value.trim(),t=document.getElementById("f-tel").value.trim(),e=document.getElementById("f-end").value.trim();document.getElementById("b4").disabled=!(n&&t&&e);}
+function updateSum(){const ds=ST.date?ST.date.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"}):"—";document.getElementById("rs").textContent=ST.svc||"—";document.getElementById("rd").textContent=ds;document.getElementById("rt").textContent=ST.time||"—";}
+
+async function confirm_booking(){
+  const nome=document.getElementById("f-nome").value.trim(),tel=document.getElementById("f-tel").value.trim(),end=document.getElementById("f-end").value.trim(),obs=document.getElementById("f-obs").value.trim();
+  const ds=ST.date?ST.date.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"}):"—";
+  document.getElementById("fs").textContent=ST.svc;document.getElementById("fd").textContent=ds;document.getElementById("fh").textContent=ST.time;document.getElementById("fn").textContent=nome;
+  for(let i=1;i<=4;i++){const d=document.getElementById("d"+i);d.classList.remove("active");d.classList.add("done");d.innerHTML="✓";}
+  for(let i=1;i<=3;i++) document.getElementById("l"+i).classList.add("done");
+  document.querySelectorAll(".bstep").forEach(e=>e.classList.remove("active"));
+  document.getElementById("sOk").classList.add("active");
+  const s=document.getElementById('scroller'),el=document.getElementById("agendar");
+  if(s&&el) s.scrollTo({top:el.offsetTop,behavior:'smooth'});
+  if(ST.date&&window.storage){const dk=ST.date.toISOString().split('T')[0];try{await window.storage.set(`booked:${dk}:${ST.time}`,'1');}catch(e){}}
+  sendEmail({servico:ST.svc,data:ds,horario:ST.time,nome,telefone:tel,endereco:end,observacoes:obs||"Nenhuma"}).then(()=>console.log("✅ Email enviado!")).catch(e=>console.warn("EmailJS:",e));
+  const msg=encodeURIComponent(`Olá, Echo Jardinagem! 🌿 Gostaria de confirmar um agendamento:\n\n📋 *Serviço:* ${ST.svc}\n📅 *Data:* ${ds}\n⏰ *Horário:* ${ST.time}\n👤 *Nome:* ${nome}\n📞 *Telefone:* ${tel}\n📍 *Endereço:* ${end}`+(obs?`\n💬 *Observações:* ${obs}`:"")+`\n\nAguardo a confirmação. Obrigado(a)!`);
+  setTimeout(()=>window.open(`https://wa.me/${PHONE}?text=${msg}`,"_blank"),600);
+}
+
+function reset_booking(){
+  ST.svc=null;ST.date=null;ST.time=null;
+  document.querySelectorAll(".svc-opt").forEach(o=>o.classList.remove("sel"));
+  ["f-nome","f-tel","f-end","f-obs"].forEach(id=>document.getElementById(id).value="");
+  go(1);renderCal();
+}
+
+renderCal();
+</script>
