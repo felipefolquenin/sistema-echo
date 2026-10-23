@@ -2,7 +2,8 @@
 // ou quando a pessoa toca/clica na tela (ou aperta qualquer tecla).
 import { html, useState, useEffect, useRef } from "./lib.js";
 
-const VIDEO = "media/intro.mp4";
+// Duas versões: WebM (abre em qualquer navegador) e MP4 (iPhone/Safari)
+const VIDEOS = [["media/intro.webm", "video/webm"], ["media/intro.mp4", "video/mp4"]];
 const CHAVE = "echo-intro-vista";
 
 // Mostra uma vez por visita (se fechar o navegador e voltar, aparece de novo)
@@ -37,8 +38,10 @@ export function Intro({ children }) {
     ${children}
     ${visivel && html`
       <div class=${"intro " + (saindo ? "saindo" : "")} onClick=${fechar} role="button" aria-label="Pular introdução">
-        <video ref=${video} src=${VIDEO} muted autoplay playsinline preload="auto"
-               onEnded=${fechar} onError=${fechar}></video>
+        <video ref=${video} muted autoplay playsinline preload="auto" onEnded=${fechar}>
+          ${VIDEOS.map(([src, tipo], i) => html`
+            <source key=${src} src=${src} type=${tipo} onError=${i === VIDEOS.length - 1 ? fechar : undefined} />`)}
+        </video>
         <span class="intro-pular">Toque na tela para pular ›</span>
       </div>`}`;
 }
