@@ -1,0 +1,45 @@
+# Mantém o banco do Supabase ativo.
+# No plano grátis, o Supabase pausa o projeto depois de 7 dias sem acesso.
+# Este robô do GitHub faz uma consulta simples a cada 3 dias para isso não acontecer.
+name: Manter Supabase ativo
+
+on:
+  schedule:
+    - cron: "17 12 */3 * *"   # a cada 3 dias, por volta de 9h (horário de Brasília)
+  workflow_dispatch:           # permite rodar na mão pela aba Actions
+
+permissions:
+  contents: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Consultar o banco
+        run: |
+          URL=$(grep -oP 'SUPABASE_URL = "\K[^"]+' js/config.js)
+          KEY=$(grep -oP 'SUPABASE_ANON_KEY = "\K[^"]+' js/config.js)
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$URL/rest/v1/rpc/condominios_publicos" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d '{}')
+          echo "Supabase respondeu: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::O Supabase não respondeu normalmente ($STATUS). Verifique se o projeto foi pausado em supabase.com/dashboard."
+            exit 1
+          fi
+
+      # O GitHub desliga robôs agendados em repositórios sem nenhuma alteração por 60 dias.
+      # Uma vez por mês o robô anota a data aqui, e assim continua ligado.
+      - name: Registrar atividade mensal
+        if: github.event_name == 'schedule'
+        run: |
+          MES=$(date -u +%Y-%m)
+          if [ "$(cat .github/ultimo-acesso.txt 2>/dev/null)" != "$MES" ]; then
+            echo "$MES" > .github/ultimo-acesso.txt
+            git config user.name "robo-echo"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .github/ultimo-acesso.txt
+            git commit -m "Robô: registro de atividade $MES"
+            git push
+          fi
