@@ -70,6 +70,7 @@ input.codigo, .entrada-codigo { letter-spacing: .1em; font-weight: 700; }
 /* Alertas e estados */
 .alerta { border-radius: 9px; padding: .7rem 1rem; font-size: .85rem; text-align: left; }
 .alerta-erro { background: var(--erro-bg); border: 1.5px solid var(--erro-borda); color: var(--erro); }
+.alerta-aviso { display: block; background: var(--amarelo-bg); border: 1.5px solid #fbbf24; color: #92400e; font-weight: 600; }
 .alerta-ok { background: var(--v50); border: 1.5px solid var(--v200); color: var(--v700); font-weight: 600; }
 .carregando { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--v900); color: var(--v400); font-weight: 600; }
 .vazio { text-align: center; padding: 3rem 1rem; background: #fff; border-radius: var(--raio); border: 1.5px dashed var(--c200); color: var(--c400); }
@@ -197,3 +198,18 @@ input.codigo, .entrada-codigo { letter-spacing: .1em; font-weight: 700; }
 .servico-item strong { font-size: .84rem; color: var(--v800); }
 .caixa-clara { background: #f9fffe; border: 1.5px solid var(--v100); border-radius: 12px; padding: .9rem; margin-top: .6rem; }
 @media (min-width: 600px) { .modal-fundo { align-items: center; } .modal { border-radius: 20px; } }
+
+
+/* Instalar app */
+.cartao-instalar { width: 100%; display: flex; align-items: center; gap: .9rem; background: #fff; border: 1.5px dashed var(--v300); border-radius: 16px; padding: .9rem 1.1rem; text-align: left; }
+.cartao-instalar img { border-radius: 10px; flex-shrink: 0; }
+.cartao-instalar strong { display: block; color: var(--v800); font-size: .92rem; }
+.cartao-instalar span:not(.instalar-seta) { flex: 1; }
+.instalar-seta { font-size: 1.2rem; color: var(--v700); }
+.dica-iphone { margin: .6rem 0 0 1.4rem; font-size: .85rem; color: var(--c600); display: grid; gap: .35rem; }
+
+/* Vídeo de introdução */
+.intro { position: fixed; inset: 0; z-index: 5000; background: var(--v800); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity .4s; }
+.intro.saindo { opacity: 0; pointer-events: none; }
+.intro video { width: 100%; height: 100%; object-fit: contain; }
+.intro-pular { position: absolute; bottom: max(1.5rem, env(safe-area-inset-bottom)); right: 1.2rem; background: rgba(0, 0, 0, .35); color: #fff; font-size: .8rem; font-weight: 600; padding: .45rem .9rem; border-radius: 100px; }

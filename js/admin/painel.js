@@ -2,7 +2,7 @@
 import { html, useState, useEffect, useCallback } from "../lib.js";
 import * as api from "../api.js";
 import { proximasVisitas, descreverAgenda, chaveLembrete } from "../agenda.js";
-import { mesAtual, mesAtualLabel, fmtDiaSemana, enviarEmail, msgErro, plural } from "../util.js";
+import { mesAtual, mesAtualLabel, fmtDiaSemana, enviarEmail, msgErro, plural, diasDesdeBackup } from "../util.js";
 import { Carregando, Erro, useAviso } from "../components.js";
 import { AbaAgenda, AbaProximas } from "./agenda.js";
 import { AbaReclamacoes } from "./reclamacoes.js";
@@ -110,6 +110,8 @@ export function Painel({ aba = "agenda" }) {
       </nav>
       <div class="conteudo">
         <${Erro}>${erro}<//>
+        ${atual.id !== "ajustes" && (diasDesdeBackup() ?? 999) > 30 && html`
+          <a class="alerta alerta-aviso mb" href="#/admin/ajustes">💾 Faz mais de 30 dias sem backup. Toque aqui para baixar.</a>`}
         <${atual.C} ...${dados} recarregar=${recarregar} avisar=${avisar} />
       </div>
     </div>`;

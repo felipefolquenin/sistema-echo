@@ -227,6 +227,23 @@ export async function registrarLembrete(chave, sucesso) {
 }
 
 // ---------------------------------------------------------------------
+// Backup: baixa uma cópia de todos os dados num arquivo
+// ---------------------------------------------------------------------
+export async function gerarBackup() {
+  const [condominios, servicos, servicos_feitos, reclamacoes, publicacoes, lembretes] = await Promise.all(
+    ["condominios", "servicos", "servicos_feitos", "reclamacoes", "publicacoes", "lembretes"].map(
+      async (t) => ok(await sb.from(t).select("*"))
+    )
+  );
+  return {
+    sistema: "Echo Jardinagem — Portal dos Condomínios",
+    gerado_em: new Date().toISOString(),
+    observacao: "As fotos continuam guardadas no Supabase; aqui ficam os links delas.",
+    dados: { condominios, servicos, servicos_feitos, reclamacoes, publicacoes, lembretes },
+  };
+}
+
+// ---------------------------------------------------------------------
 // Importar dados do sistema antigo (que ficavam salvos só no navegador)
 // ---------------------------------------------------------------------
 function lerAntigo(chave) {

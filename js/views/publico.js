@@ -3,6 +3,7 @@ import { html, useState, useEffect } from "../lib.js";
 import * as api from "../api.js";
 import { STATUS } from "../config.js";
 import { fmtData, msgErro } from "../util.js";
+import { BotaoInstalar } from "../instalar.js";
 import { Botao, Voltar, Vazio, Erro, Campo, SeletorFoto, SeloStatus, Carregando, FotosAntesDepois } from "../components.js";
 
 export function Inicio() {
@@ -26,6 +27,7 @@ export function Inicio() {
           <p>Veja resultados dos serviços com fotos de antes e depois.</p>
           <span class="cartao-link">Acessar com código →</span>
         </a>
+        <${BotaoInstalar} />
       </main>
       <footer class="rodape"><a href="#/admin">Área Administrativa</a></footer>
     </div>`;

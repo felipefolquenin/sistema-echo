@@ -6,6 +6,7 @@ import { WHATSAPP } from "./config.js";
 import { Inicio, NovaReclamacao, PortalMoradores } from "./views/publico.js";
 import { Login, NovaSenha } from "./views/login.js";
 import { Painel } from "./admin/painel.js";
+import { Intro } from "./intro.js";
 
 // "#/admin/reclamacoes" → ["admin", "reclamacoes"]
 function lerRota() {
@@ -73,4 +74,7 @@ function App() {
   }
 }
 
-createRoot(document.getElementById("app")).render(html`<${App} />`);
+// Permite instalar o site como app no celular
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+
+createRoot(document.getElementById("app")).render(html`<${Intro}><${App} /><//>`);

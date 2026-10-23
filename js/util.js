@@ -74,3 +74,15 @@ export function msgErro(e) {
   if (/Email not confirmed/i.test(m)) return "Confirme seu e-mail antes de entrar (veja sua caixa de entrada).";
   return m || "Algo deu errado. Tente de novo.";
 }
+
+// Lembrete de backup (fica salvo só neste navegador)
+export function diasDesdeBackup() {
+  try {
+    const ultimo = localStorage.getItem("echo-ultimo-backup");
+    return ultimo ? Math.floor((Date.now() - Number(ultimo)) / 86400000) : null;
+  } catch { return null; }
+}
+
+export function marcarBackupFeito() {
+  try { localStorage.setItem("echo-ultimo-backup", String(Date.now())); } catch { /* ignora */ }
+}
