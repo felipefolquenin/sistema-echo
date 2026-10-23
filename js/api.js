@@ -19,6 +19,11 @@ const sb = configurado
 
 const BUCKET = "fotos";
 
+// Nome único para cada foto (crypto.randomUUID só existe em HTTPS, então tem plano B)
+const idUnico = () =>
+  crypto.randomUUID ? crypto.randomUUID()
+    : Date.now().toString(36) + Array.from(crypto.getRandomValues(new Uint8Array(8)), (n) => n.toString(16).padStart(2, "0")).join("");
+
 // Desembrulha a resposta do Supabase: devolve os dados ou lança o erro
 function ok({ data, error }) {
   if (error) throw error;
@@ -29,7 +34,7 @@ function ok({ data, error }) {
 // Fotos
 // ---------------------------------------------------------------------
 export async function enviarFoto(blob, pasta) {
-  const caminho = `${pasta}/${crypto.randomUUID()}.jpg`;
+  const caminho = `${pasta}/${idUnico()}.jpg`;
   ok(await sb.storage.from(BUCKET).upload(caminho, blob, { contentType: "image/jpeg", upsert: false }));
   return sb.storage.from(BUCKET).getPublicUrl(caminho).data.publicUrl;
 }
