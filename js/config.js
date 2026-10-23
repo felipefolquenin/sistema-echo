@@ -18,18 +18,12 @@ export const EMAILJS = {
   templateId: "template_4fdj8fo",
 };
 
-// Catálogo de serviços e planos
+// Catálogo de serviços
 export const SERVICOS = [
   "Corte de Grama ✂️", "Poda de Árvore 🌳", "Irrigação Inteligente 💧",
   "Iluminação de Jardim 💡", "Limpeza Geral 🧹", "Adubação 🌱",
   "Controle de Pragas 🐛", "Paisagismo 🌸",
 ];
-
-export const PLANOS = {
-  Essencial:    { ico: "🌱", cls: "plano-essencial" },
-  Profissional: { ico: "⚙️", cls: "plano-profissional" },
-  Premium:      { ico: "⭐", cls: "plano-premium" },
-};
 
 export const STATUS = {
   pendente:  { l: "Aguardando",   i: "⏳", cls: "st-pendente" },

@@ -80,9 +80,6 @@ input.codigo, .entrada-codigo { letter-spacing: .1em; font-weight: 700; }
 
 /* Selos */
 .selo { font-size: .72rem; font-weight: 700; padding: .2rem .65rem; border-radius: 100px; white-space: nowrap; display: inline-block; }
-.plano-essencial { background: #dcfce7; color: #16a34a; }
-.plano-profissional { background: var(--azul-bg); color: var(--azul); }
-.plano-premium { background: var(--amarelo-bg); color: var(--amarelo); }
 .st-pendente { background: var(--amarelo-bg); color: #b45309; }
 .st-andamento { background: var(--azul-bg); color: var(--azul); }
 .st-resolvida { background: #dcfce7; color: #15803d; }
@@ -195,9 +192,6 @@ input.codigo, .entrada-codigo { letter-spacing: .1em; font-weight: 700; }
 .modal-fundo { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); z-index: 999; display: flex; align-items: flex-end; justify-content: center; }
 .modal { background: #fff; border-radius: 20px 20px 0 0; padding: 1.5rem; width: 100%; max-width: 540px; max-height: 93vh; overflow-y: auto; }
 .fechar { background: none; border: none; font-size: 1.4rem; color: #aaa; line-height: 1; }
-.opcoes-plano { display: flex; gap: .4rem; flex-wrap: wrap; }
-.opcao { flex: 1; padding: .65rem; border-radius: 10px; border: 1.5px solid var(--c200); background: #fff; font-weight: 700; font-size: .84rem; color: var(--v800); }
-.opcao.ativa { border-color: currentColor; }
 .secao { border-top: 1px solid var(--c200); padding-top: .85rem; }
 .servico-item { display: flex; align-items: center; gap: .6rem; background: var(--v50); border-radius: 9px; padding: .6rem .9rem; border: 1px solid var(--v100); }
 .servico-item strong { font-size: .84rem; color: var(--v800); }

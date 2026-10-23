@@ -3,7 +3,7 @@ import { html, useState } from "../lib.js";
 import * as api from "../api.js";
 import { descreverAgenda, chaveLembrete } from "../agenda.js";
 import { mesAtual, chaveDia, fmtDiaSemana, capitalizar, msgErro } from "../util.js";
-import { Vazio, SeloPlano } from "../components.js";
+import { Vazio } from "../components.js";
 
 export function AbaAgenda({ condominios, feitos, recarregar, avisar }) {
   const [marcando, setMarcando] = useState(null);
@@ -33,7 +33,6 @@ export function AbaAgenda({ condominios, feitos, recarregar, avisar }) {
               </div>
               <div class="cabeca-dir">
                 <span class="contador">${feitosN}/${c.servicos.length}${completo ? " ✅" : ""}</span>
-                <${SeloPlano} plano=${c.plano} />
               </div>
             </header>
             ${!c.servicos.length

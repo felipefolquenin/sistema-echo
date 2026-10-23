@@ -1,6 +1,6 @@
 // Peças de interface reutilizáveis.
 import { html, useState, useRef, useEffect } from "./lib.js";
-import { PLANOS, STATUS } from "./config.js";
+import { STATUS } from "./config.js";
 import { comprimirImagem } from "./util.js";
 
 export function Botao({ onClick, children, variante = "primario", tipo = "button", carregando = false, largo = false, desativado = false, titulo }) {
@@ -34,11 +34,6 @@ export function Sucesso({ children }) {
 
 export function Carregando({ texto = "Carregando…" }) {
   return html`<div class="carregando">🌿 ${texto}</div>`;
-}
-
-export function SeloPlano({ plano = "Essencial" }) {
-  const p = PLANOS[plano] || PLANOS.Essencial;
-  return html`<span class=${"selo " + p.cls}>${p.ico} ${plano}</span>`;
 }
 
 export function SeloStatus({ status }) {

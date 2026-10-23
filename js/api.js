@@ -127,8 +127,8 @@ export async function listarCondominios() {
 // Salva o condomínio e sincroniza a lista de serviços (mantém o
 // histórico do checklist dos serviços que continuam).
 export async function salvarCondominio(cond, servicos) {
-  const { id, nome, endereco, contato, telefone, plano, codigo_acesso, ativo } = cond;
-  const dados = { nome: nome.trim(), endereco, contato, telefone, plano, ativo,
+  const { id, nome, endereco, contato, telefone, codigo_acesso, ativo } = cond;
+  const dados = { nome: nome.trim(), endereco, contato, telefone, ativo,
                   codigo_acesso: codigo_acesso.trim().toLowerCase() };
 
   const salvo = id
@@ -265,7 +265,7 @@ export async function importarDadosAntigos(progresso = () => {}) {
     if (cod && jaExistem[cod]) { mapa[c.id] = jaExistem[cod]; continue; }
     const salvo = await salvarCondominio(
       { nome: c.nome, endereco: c.endereco || null, contato: c.contato || null,
-        telefone: c.telefone || null, plano: c.plano || "Essencial",
+        telefone: c.telefone || null,
         codigo_acesso: c.code || Math.random().toString(36).slice(2, 8), ativo: c.ativo !== false },
       (c.servicos || []).map((s) => ({
         nome: s.nome, frequencia: s.freq || "Semanal",

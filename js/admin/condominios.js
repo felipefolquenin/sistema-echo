@@ -1,17 +1,17 @@
-// Aba "Condomínios": cadastro, plano, código de acesso e serviços contratados.
+// Aba "Condomínios": cadastro, código de acesso e serviços contratados.
 import { html, useState } from "../lib.js";
 import * as api from "../api.js";
-import { PLANOS, SERVICOS } from "../config.js";
+import { SERVICOS } from "../config.js";
 import { DIAS, descreverAgenda } from "../agenda.js";
 import { msgErro, plural } from "../util.js";
-import { Vazio, SeloPlano, Botao, Campo, Erro } from "../components.js";
+import { Vazio, Botao, Campo, Erro } from "../components.js";
 
 const novoCodigo = () => {
   const letras = "abcdefghjkmnpqrstuvwxyz23456789";
   return Array.from(crypto.getRandomValues(new Uint8Array(6)), (n) => letras[n % letras.length]).join("");
 };
 
-const NOVO = () => ({ id: null, nome: "", endereco: "", contato: "", telefone: "", plano: "Essencial", codigo_acesso: novoCodigo(), ativo: true });
+const NOVO = () => ({ id: null, nome: "", endereco: "", contato: "", telefone: "", codigo_acesso: novoCodigo(), ativo: true });
 
 export function AbaCondominios({ condominios, recarregar, avisar }) {
   const [editando, setEditando] = useState(null); // { cond, servicos }
@@ -36,7 +36,6 @@ export function AbaCondominios({ condominios, recarregar, avisar }) {
                 <strong>${c.nome}${c.ativo ? "" : " (inativo)"}</strong>
                 ${c.endereco && html`<small>📍 ${c.endereco}</small>`}
                 <div class="linha mt-p">
-                  <${SeloPlano} plano=${c.plano} />
                   <small class="verde">${plural(c.servicos.length, "serviço", "serviços")}</small>
                   <small>Código: <strong>${c.codigo_acesso}</strong></small>
                 </div>
@@ -80,14 +79,6 @@ function FormCondominio({ inicial, fechar, salvo }) {
         <div class="grade-2">
           <${Campo} rotulo="Contato"><input value=${cond.contato || ""} onInput=${mudar("contato")} placeholder="Síndico" /><//>
           <${Campo} rotulo="Telefone"><input value=${cond.telefone || ""} onInput=${mudar("telefone")} placeholder="(42) 9…" /><//>
-        </div>
-        <div>
-          <span class="rotulo">Plano contratado</span>
-          <div class="opcoes-plano">
-            ${Object.entries(PLANOS).map(([nome, p]) => html`
-              <button type="button" key=${nome} class=${"opcao " + (cond.plano === nome ? "ativa " + p.cls : "")}
-                      onClick=${() => setCond({ ...cond, plano: nome })}>${p.ico} ${nome}</button>`)}
-          </div>
         </div>
         <${Campo} rotulo="Código de acesso do portal">
           <div class="linha">

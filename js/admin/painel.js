@@ -66,7 +66,7 @@ export function Painel({ aba = "agenda" }) {
           nome: "Echo Jardinagem",
           telefone: v.cond.telefone || "—",
           endereco: v.cond.endereco || "—",
-          observacoes: `Plano: ${v.cond.plano} | ${v.servico.frequencia} | ${descreverAgenda(v.servico)}`,
+          observacoes: `${v.servico.frequencia} | ${descreverAgenda(v.servico)}`,
         });
         enviados++;
       } catch { sucesso = false; falhas++; }
